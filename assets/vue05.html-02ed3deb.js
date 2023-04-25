@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-57028d10","path":"/vue/vue05.html","title":"换肤","lang":"zh-CN","frontmatter":{"title":"换肤","sidebarDepth":0},"headers":[{"level":2,"title":"一键换肤","slug":"一键换肤","link":"#一键换肤","children":[]}],"git":{},"filePathRelative":"vue/vue05.md"}');export{e as data};

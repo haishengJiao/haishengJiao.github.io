@@ -1,0 +1,1 @@
+import{_ as n,M as o,p as t,q as a,N as c}from"./framework-c053e3d1.js";const s={};function _(r,l){const e=o("HomeCanvas");return t(),a("div",null,[c(e)])}const d=n(s,[["render",_],["__file","index.html.vue"]]);export{d as default};

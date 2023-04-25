@@ -1,0 +1,1 @@
+import{_ as t,p as s,q as a,Q as e,t as c}from"./framework-c053e3d1.js";const n={},r=e("h1",{id:"js-相关",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#js-相关","aria-hidden":"true"},"#"),c(" js 相关")],-1),o=[r];function _(d,i){return s(),a("div",null,o)}const l=t(n,[["render",_],["__file","index.html.vue"]]);export{l as default};

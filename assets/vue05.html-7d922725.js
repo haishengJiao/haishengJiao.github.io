@@ -1,0 +1,1 @@
+import{_ as a,M as o,p as c,q as n,N as r,Q as e,t as s}from"./framework-c053e3d1.js";const _={},d=e("h2",{id:"一键换肤",tabindex:"-1"},[e("a",{class:"header-anchor",href:"#一键换肤","aria-hidden":"true"},"#"),s(" 一键换肤")],-1);function l(i,u){const t=o("vue05");return c(),n("div",null,[d,r(t)])}const f=a(_,[["render",l],["__file","vue05.html.vue"]]);export{f as default};

@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-f9afd7d0","path":"/css/css03.html","title":"新拟态风格的按钮","lang":"zh-CN","frontmatter":{"title":"新拟态风格的按钮","sidebarDepth":0},"headers":[{"level":2,"title":"新拟态风格的按钮","slug":"新拟态风格的按钮","link":"#新拟态风格的按钮","children":[{"level":3,"title":"代码","slug":"代码","link":"#代码","children":[]}]}],"git":{},"filePathRelative":"css/css03.md"}');export{e as data};

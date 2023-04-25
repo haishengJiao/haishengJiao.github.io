@@ -1,0 +1,1 @@
+import{_ as s,p as c,q as _,aN as t,aO as o,Q as a}from"./framework-c053e3d1.js";const n={},d=e=>(t("data-v-7b4b4efb"),e=e(),o(),e),p={class:"container"},r=d(()=>a("span",{class:"text"},"君子泰然自若 不会骄傲",-1)),i=[r];function f(e,b){return c(),_("div",p,i)}const u=s(n,[["render",f],["__scopeId","data-v-7b4b4efb"],["__file","css01.vue"]]);export{u as default};

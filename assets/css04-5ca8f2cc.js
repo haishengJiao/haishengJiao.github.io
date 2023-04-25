@@ -1,0 +1,1 @@
+import{_ as e,p as t,q as _,Q as a,aj as o}from"./framework-c053e3d1.js";const c="/assets/avatar_female-849b8132.png";const n={},r={class:"container"};function i(d,s){return t(),_("div",r,[a("img",{src:c,alt:"",onClick:s[0]||(s[0]=o(()=>{},["stop"]))})])}const l=e(n,[["render",i],["__scopeId","data-v-8fdfa828"],["__file","css04.vue"]]);export{l as default};

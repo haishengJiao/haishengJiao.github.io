@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-f6462692","path":"/css/css04.html","title":"奇妙的头像特效","lang":"zh-CN","frontmatter":{"title":"奇妙的头像特效","sidebarDepth":0},"headers":[{"level":2,"title":"奇妙的头像特效","slug":"奇妙的头像特效","link":"#奇妙的头像特效","children":[{"level":3,"title":"代码","slug":"代码","link":"#代码","children":[]}]}],"git":{},"filePathRelative":"css/css04.md"}');export{e as data};

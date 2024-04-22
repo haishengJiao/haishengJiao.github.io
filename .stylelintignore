@@ -12,3 +12,4 @@ types
 .eslintignore
 .prettierignore
 .stylelintignore
+.husky

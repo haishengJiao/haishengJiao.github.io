@@ -17,6 +17,7 @@ coverage
 *.local
 .eslintcache
 .stylelintcache
+.husky
 
 /cypress/videos/
 /cypress/screenshots/

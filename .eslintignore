@@ -7,3 +7,4 @@ dist
 .eslintignore
 .prettierignore
 .stylelintignore
+.husky

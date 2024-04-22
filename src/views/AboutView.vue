@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 const a = ref(1)
 const b = ref('123123123123123123123123123123asdasdsaasdsadasdasdasdqweasasddasa')

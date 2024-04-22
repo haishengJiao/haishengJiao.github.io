@@ -1,11 +1,23 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "./components.d.ts",
+    "demo/**/*",
+    "demo/**/*.vue"
+  ],
+  "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
     },
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ]
+    "strict": true, //开启严格模式检查 所有严格检查的总开关
+    "noEmitOnError": true,
+    "types": ["node"]
+  },
+
+  "references": []
 }

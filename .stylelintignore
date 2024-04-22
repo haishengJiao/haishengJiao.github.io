@@ -1,0 +1,9 @@
+node_modules
+.vscode
+.idea
+dist
+/public
+.eslintrc.js
+vue.config.js
+types
+/src/assets/iconfont/**

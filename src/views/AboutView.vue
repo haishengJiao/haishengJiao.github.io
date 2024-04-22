@@ -1,0 +1,27 @@
+<template>
+  <div class="about">
+    <h1>This is an about page</h1>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
+
+const a = ref(1)
+const b = ref('123123123123123123123123123123asdasdsaasdsadasdasdasdqweasasddasa')
+const obj = { o: 1 }
+
+const fn = () => {
+  console.log(a.value)
+}
+</script>
+
+<style>
+@media (min-width: 1024px) {
+  .about {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+}
+</style>

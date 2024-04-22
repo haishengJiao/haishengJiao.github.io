@@ -1,13 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": [
-    "env.d.ts",
-    "src/**/*",
-    "src/**/*.vue",
-    "./components.d.ts",
-    "demo/**/*",
-    "demo/**/*.vue"
-  ],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "./components.d.ts"],
   "compilerOptions": {
     "ignoreDeprecations": "5.0",
     "baseUrl": ".",
@@ -18,6 +11,5 @@
     "noEmitOnError": true,
     "types": ["node"]
   },
-
   "references": []
 }

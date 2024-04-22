@@ -11,9 +11,12 @@ node_modules
 .DS_Store
 dist
 dist-ssr
+.vscode
 coverage
 /package-lock.json
 *.local
+.eslintcache
+.stylelintcache
 
 /cypress/videos/
 /cypress/screenshots/

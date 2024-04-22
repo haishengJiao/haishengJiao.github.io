@@ -1,0 +1,9 @@
+b {
+  display: flex;
+  font-size: 12px;
+  columns: 1;
+}
+
+a {
+  align-self: start;
+}

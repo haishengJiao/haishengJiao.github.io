@@ -4,13 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
+    "createvscode": "node createvscode.cjs",
+    "dev": "run-p createvscode && vite",
+    "build": "run-p build-only",
+    "preview": "vite preview --port 4173",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
+    "type-check": "vue-tsc --noEmit",
+    "lint": "eslint --ext .js,.vue,.ts src --cache --fix",
+    "lint:style": "stylelint \"./**/*.{css,scss,vue,html}\" --cache --fix",
+    "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md,css,scss}\"",
+    "lint:all": "run-p type-check lint lint:style format"
   },
   "dependencies": {
     "pinia": "^2.1.7",
@@ -32,6 +35,9 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-vue": "^9.9.0",
     "npm-run-all2": "^6.1.2",
+    "postcss": "^8.4.21",
+    "postcss-html": "^1.5.0",
+    "postcss-scss": "^4.0.6",
     "prettier": "^2.7.1",
     "sass": "^1.54.9",
     "sass-loader": "^13.0.2",

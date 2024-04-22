@@ -7,3 +7,8 @@ dist
 vue.config.js
 types
 /src/assets/iconfont/**
+.eslintcache
+.stylelintcache
+.eslintignore
+.prettierignore
+.stylelintignore

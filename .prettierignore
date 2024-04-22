@@ -1,2 +1,8 @@
 /dist
+.vscode
 /src/assets/iconfont/**
+.eslintcache
+.stylelintcache
+.eslintignore
+.prettierignore
+.stylelintignore

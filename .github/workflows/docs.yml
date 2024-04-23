@@ -23,10 +23,10 @@ jobs:
           # 选择要使用的 node 版本
           node-version: 18.20.2
 
-      # 步骤3 下载项目依赖    
+      # 步骤3 下载项目依赖
       - name: install
         run: npm install
-        
+
       # 步骤4 打包node项目
       - name: build
         run: npm run build # 此处是你node项目的构建脚本
@@ -36,9 +36,9 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
-          # 部署到 gh-pages 分支
+          # 部署到 master 分支
           target_branch: master
-          # 部署目录为 VuePress 的默认输出目录
+          # 部署目录的默认输出目录
           build_dir: dist
         env:
           # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret

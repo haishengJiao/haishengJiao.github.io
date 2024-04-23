@@ -4,17 +4,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-
-const a = ref(1)
-const b = ref('123123123123123123123123123123asdasdsaasdsadasdasdasdqweasasddasa')
-const obj = { o: 1 }
-
-const fn = () => {
-  console.log(a.value)
-}
-</script>
+<script setup lang="ts"></script>
 
 <style>
 @media (min-width: 1024px) {

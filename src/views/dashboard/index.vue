@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import Worker from '@/utils/worker/timer.worker.ts?worker'
 
 const hourPointerRef = ref()
 const minutePointerRef = ref()
@@ -26,22 +27,33 @@ const startTime = () => {
   const now = new Date()
   const formatHours = now.getHours() > 12 ? now.getHours() - 12 : now.getHours()
   seconds.value = now.getSeconds()
-  minutes.value = now.getMinutes() + seconds.value
+  minutes.value = now.getMinutes() * 60 + seconds.value
   hours.value = formatHours * 60 * 60 + minutes.value
-  secondPointerRef.value.style.transform = `rotate(${(360 / 60) * seconds.value}deg)`
-  minutePointerRef.value.style.transform = `rotate(${(360 / 60 / 60) * minutes.value}deg)`
-  hourPointerRef.value.style.transform = `rotate(${(360 / 60 / 60 / 12) * hours.value}deg)`
-  setInterval(() => {
+
+  const updateTransform = () => {
+    secondPointerRef.value.style.transform = `rotate(${(360 / 60) * seconds.value}deg)`
+    minutePointerRef.value.style.transform = `rotate(${(360 / 60 / 60) * minutes.value}deg)`
+    hourPointerRef.value.style.transform = `rotate(${(360 / 60 / 60 / 12) * hours.value}deg)`
+  }
+  updateTransform()
+
+  const updateTime = () => {
     seconds.value++
     minutes.value++
     hours.value++
     if (seconds.value === 60) seconds.value = 0
     if (minutes.value === 60 * 60) minutes.value = 0
     if (hours.value === 60 * 60 * 12) hours.value = 0
-    secondPointerRef.value.style.transform = `rotate(${(360 / 60) * seconds.value}deg)`
-    minutePointerRef.value.style.transform = `rotate(${(360 / 60 / 60) * minutes.value}deg)`
-    hourPointerRef.value.style.transform = `rotate(${(360 / 60 / 60 / 12) * hours.value}deg)`
-  }, 1000)
+    updateTransform()
+  }
+
+  try {
+    const worker = new Worker()
+    worker.postMessage({ type: 'start' })
+    worker.onmessage = updateTime
+  } catch (error) {
+    setInterval(updateTime, 1000)
+  }
 }
 
 onMounted(() => {
@@ -50,8 +62,6 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@use 'sass:math';
-
 .dashboard-container {
   width: 100%;
   height: 100%;

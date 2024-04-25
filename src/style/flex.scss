@@ -1,0 +1,71 @@
+.display-flex {
+  display: box !important;
+  display: flex !important;
+  display: -moz-flex !important;
+  display: flexbox !important;
+}
+
+.display-row {
+  -webkit-box-orient: vertical;
+  flex-direction: row;
+}
+
+.display-column {
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+}
+
+.flex-align {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.flex-justify {
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.flex-justify-end {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: flex-end;
+}
+
+.flex-justify-between {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.flex-1 {
+  -webkit-box-flex: 1;
+  flex: 1;
+}
+
+.flex-justify-evenly {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-evenly;
+}
+
+.flex-justify-around {
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-around;
+}
+
+.flex-wrap {
+  -webkit-box-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  -webkit-box-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}

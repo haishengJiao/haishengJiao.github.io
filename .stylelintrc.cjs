@@ -32,6 +32,10 @@ module.exports = {
     'src/styles/element-ui-overrides.less'
   ],
   rules: {
+    "at-rule-no-unknown": null, // 禁用原生规则
+    "scss/at-rule-no-unknown": [true, {
+      "ignoreAtRules": ["for", "each", "while", "if", "else", "elseif", "include", "extend", "mixin", "content", "debug", "warn", "error"]
+    }],
     'property-no-vendor-prefix': null, // 关闭属性前缀 -webkit-mask
     'selector-class-pattern': [
       // 命名规范 -

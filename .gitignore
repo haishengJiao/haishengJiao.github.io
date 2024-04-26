@@ -18,6 +18,8 @@ coverage
 .eslintcache
 .stylelintcache
 .husky
+auto-imports.d.ts
+components.d.ts
 
 /cypress/videos/
 /cypress/screenshots/

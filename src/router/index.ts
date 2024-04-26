@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useThemeStore } from '@/stores'
 import Home from '@/views/home/index.vue'
 import dashboard from './dashboard'
 import vue from './vue'
@@ -20,6 +21,17 @@ const router = createRouter({
       children: [dashboard, ...vue, ...css]
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (!from.name && from.path === '/') {
+    const themeColor = useThemeStore()
+    const theme = localStorage.getItem('theme') ? localStorage.getItem('theme') : '#E64C65'
+    const hover = localStorage.getItem('hover') ? localStorage.getItem('hover') : '#CA4359'
+    themeColor.setThemeColor(theme as string)
+    themeColor.setHoverColor(hover as string)
+  }
+  next()
 })
 
 export default router

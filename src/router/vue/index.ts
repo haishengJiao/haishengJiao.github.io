@@ -39,15 +39,15 @@ export default [
     }
   },
   {
-    path: 'vue2',
-    name: 'vue2',
+    path: 'theme',
+    name: 'theme',
     meta: {
-      title: 'vue2',
+      title: '主题色',
       index: 2,
       group: 'vue',
       isShowSub: true
     },
-    component: () => import('@/views/vue/vue2.vue')
+    component: () => import('@/views/vue/theme.vue')
   },
   {
     path: 'vue3',

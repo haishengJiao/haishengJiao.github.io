@@ -9,7 +9,9 @@
           <j-aside :nav="nav"></j-aside>
         </el-aside>
         <el-main>
-          <router-view></router-view>
+          <el-scrollbar height="100%">
+            <router-view></router-view>
+          </el-scrollbar>
         </el-main>
       </el-container>
     </el-container>

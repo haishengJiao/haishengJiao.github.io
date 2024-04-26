@@ -1,4 +1,15 @@
+:root {
+  --el-color-primary: var(--theme-color);
+  --el-color-primary-light-3: var(--hover-color);
+  --el-color-primary-dark-2: var(--hover-color);
+}
+
 .el-button {
   padding: 0 25px;
   height: 36px;
+}
+
+
+.el-color-dropdown__btns .el-button {
+  display: none;
 }

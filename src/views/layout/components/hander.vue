@@ -41,12 +41,12 @@ const handleNav = (path: string) => {
     ul li {
       position: relative;
       padding: 0 22px;
-      font-size: 24px;
+      font-size: 20px;
       cursor: pointer;
-    }
 
-    ul .active {
-      // font-weight: bold;
+      &:hover {
+        color: var(--hover-color);
+      }
     }
 
     ul .active::after {
@@ -56,7 +56,7 @@ const handleNav = (path: string) => {
       display: inline-block;
       width: 20px;
       height: 4px;
-      background-color: red;
+      background-color: var(--theme-color);
       border-radius: 2px;
       content: ' ';
       transform: translateX(-50%);

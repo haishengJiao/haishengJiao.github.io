@@ -52,7 +52,7 @@ const changeHander = (path: string) => {
 .common-layout {
   width: 100%;
   height: 100%;
-  background-color: #f5f5f5;
+  background-color: var(--bg-02);
 
   .common-main {
     overflow: hidden;
@@ -62,16 +62,16 @@ const changeHander = (path: string) => {
   .el-header {
     --el-header-height: 70px;
 
-    background-color: #fff;
+    background-color: var(--bg-01);
   }
 
   .el-aside {
     margin-right: 20px;
-    background-color: #fff;
+    background-color: var(--bg-01);
   }
 
   .el-main {
-    background-color: #fff;
+    background-color: var(--bg-01);
 
     &:hover {
       width: 100px;

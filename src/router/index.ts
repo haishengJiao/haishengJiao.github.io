@@ -25,11 +25,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (!from.name && from.path === '/') {
-    const themeColor = useThemeStore()
-    const theme = localStorage.getItem('theme') ? localStorage.getItem('theme') : '#E64C65'
-    const hover = localStorage.getItem('hover') ? localStorage.getItem('hover') : '#CA4359'
-    themeColor.setThemeColor(theme as string)
-    themeColor.setHoverColor(hover as string)
+    const themeStore = useThemeStore()
+    const themeColor = localStorage.getItem('THEME_COLOR')
+    const hoverColor = localStorage.getItem('HOVER_COLOR')
+    const theme = localStorage.getItem('THEME')
+    themeStore.toggleThemeColor(themeColor ? themeColor : '#E64C65')
+    themeStore.toggleHoverColor(hoverColor ? hoverColor : '#CA4359')
+    themeStore.toggleTheme(theme ? theme : 'light')
   }
   next()
 })

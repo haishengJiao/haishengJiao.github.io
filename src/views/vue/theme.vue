@@ -37,17 +37,17 @@ watch(
 
 const changeTheme = (val: string | null) => {
   if (!val) return
-  themeStore.setThemeColor(val)
+  themeStore.toggleThemeColor(val)
 }
 
 const changeHover = (val: string | null) => {
   if (!val) return
-  themeStore.setHoverColor(val)
+  themeStore.toggleHoverColor(val)
 }
 
 const handleReset = () => {
-  themeStore.setThemeColor('#E64C65')
-  themeStore.setHoverColor('#CA4359')
+  themeStore.toggleThemeColor('#E64C65')
+  themeStore.toggleHoverColor('#CA4359')
 }
 </script>
 

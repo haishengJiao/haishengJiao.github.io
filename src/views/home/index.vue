@@ -78,7 +78,7 @@ onUnmounted(() => {
 .dashboard-container {
   width: 100%;
   height: 100%;
-  background-color: #282828;
+  background-color: var(--bg-08);
   gap: 42px;
 
   .timepiece-container {
@@ -87,18 +87,18 @@ onUnmounted(() => {
     position: relative;
     width: var(--timepiece-size);
     height: var(--timepiece-size);
-    border: 7px solid #282828;
+    border: 7px solid var(--bg-01);
     border-radius: 50%;
 
     // eslint-disable-next-line prettier/prettier
     box-shadow:
       // eslint-disable-next-line prettier/prettier
-      -4px -4px 10px rgb(67 67 67 / 50%),
+      -4px -4px 10px var(--bs-01),
       // eslint-disable-next-line prettier/prettier
-      inset 4px 4px 10px rgb(0 0 0 / 50%),
+      inset 4px 4px 10px var(--bs-02),
       // eslint-disable-next-line prettier/prettier
-      inset -4px -4px 10px rgb(67 67 67 / 50%),
-      4px 4px 10px rgb(0 0 0 / 30%);
+      inset -4px -4px 10px var(--bs-03),
+      4px 4px 10px var(--bs-04);
 
     .central-point {
       position: absolute;
@@ -107,7 +107,7 @@ onUnmounted(() => {
       z-index: 4;
       width: 16px;
       height: 16px;
-      background-color: #4d4b63;
+      background-color: var(--bg-05);
       border-radius: 50%;
       transform: translate(-50%, -50%);
     }
@@ -166,7 +166,7 @@ onUnmounted(() => {
         position: absolute;
         width: 2px;
         height: 12px;
-        background-color: #bdbdcb;
+        background-color: var(--bg-07);
       }
 
       @for $i from 1 through 12 {
@@ -176,7 +176,7 @@ onUnmounted(() => {
           @if $i % 3 == 0 {
             width: 4px;
             height: 20px;
-            background-color: #1df52f;
+            background-color: var(--bg-06);
             transform: // eslint-disable-next-line prettier/prettier
               rotate(30 * $i + deg) translate(0%, calc(-1 * var(--minute-size) / 2 + 28px));
           }

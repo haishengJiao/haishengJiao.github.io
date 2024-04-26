@@ -55,7 +55,7 @@ watch(
 
     .el-menu-item.is-active {
       color: var(--el-menu-text-color);
-      background-color: #f7f7f7;
+      background-color: var(--bg-03);
 
       &::after {
         position: absolute;

@@ -13,14 +13,23 @@
         </li>
       </ul>
     </div>
-    <div>
+    <div class="nav-right display-flex flex-align">
       <div class="theme-container">
-        <el-switch
-          v-model="theme"
-          active-value="dark"
-          inactive-value="light"
-          @change="changeTheme"
-        />
+        <el-switch v-model="theme" active-value="dark" inactive-value="light" @change="changeTheme">
+          <template #active-action>
+            <i class="iconfont icon-dark"></i>
+          </template>
+          <template #inactive-action>
+            <i class="iconfont icon-liangse"></i>
+          </template>
+        </el-switch>
+      </div>
+      <div class="full-screen-container">
+        <i
+          class="iconfont"
+          :class="[isFullscreen ? 'icon-quxiaoquanping-o' : 'icon-quanping-o']"
+          @click="toggleFullScreen"
+        ></i>
       </div>
     </div>
   </div>
@@ -30,6 +39,7 @@
 import { ref, type PropType } from 'vue'
 import type { RouteRecordNormalized } from 'vue-router'
 import { useThemeStore } from '@/stores'
+import { useScreenfull } from '@/hooks/screenfull'
 
 defineProps({
   hander: { type: Object as PropType<RouteRecordNormalized[]>, default: () => ({}) },
@@ -38,6 +48,7 @@ defineProps({
 const emit = defineEmits(['changeHander'])
 
 const themeStore = useThemeStore()
+const { isFullscreen, toggleFullScreen } = useScreenfull()
 
 const handleNav = (path: string) => {
   emit('changeHander', path)
@@ -76,6 +87,37 @@ const changeTheme = (val: string | boolean | number) => {
       border-radius: 2px;
       content: ' ';
       transform: translateX(-50%);
+    }
+  }
+
+  .nav-right {
+    gap: 20px;
+
+    .theme-container {
+      :deep(.el-switch__core) {
+        --el-switch-on-color: var(--bg-09);
+        --el-switch-off-color: var(--bg-09);
+        --el-switch-border-color: var(--bd-01);
+      }
+
+      :deep(.el-switch__action) {
+        background-color: transparent;
+      }
+
+      .icon-dark {
+        color: #cfd3dc;
+      }
+
+      .icon-liangse {
+        color: #606266;
+      }
+    }
+
+    .full-screen-container {
+      .iconfont {
+        font-size: 20px;
+        font-weight: bold;
+      }
     }
   }
 }

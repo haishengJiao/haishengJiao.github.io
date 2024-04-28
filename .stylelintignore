@@ -15,3 +15,4 @@ types
 .husky
 auto-imports.d.ts
 components.d.ts
+/src/assets/iconfont/**

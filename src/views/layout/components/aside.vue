@@ -42,6 +42,8 @@ watch(
   .aside-menu {
     --el-menu-item-height: 40px;
 
+    background-color: transparent;
+    transition: all 0.2s;
     border-right: none;
 
     .el-menu-item {
@@ -49,7 +51,6 @@ watch(
 
       &:hover {
         color: var(--hover-color);
-        background-color: transparent;
       }
     }
 

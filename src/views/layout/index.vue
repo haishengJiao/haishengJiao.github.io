@@ -53,6 +53,7 @@ const changeHander = (path: string) => {
   width: 100%;
   height: 100%;
   background-color: var(--bg-02);
+  transition: all 0.2s;
 
   .common-main {
     overflow: hidden;
@@ -63,15 +64,18 @@ const changeHander = (path: string) => {
     --el-header-height: 70px;
 
     background-color: var(--bg-01);
+    transition: all 0.2s;
   }
 
   .el-aside {
     margin-right: 20px;
     background-color: var(--bg-01);
+    transition: all 0.2s;
   }
 
   .el-main {
     background-color: var(--bg-01);
+    transition: all 0.2s;
 
     &:hover {
       width: 100px;

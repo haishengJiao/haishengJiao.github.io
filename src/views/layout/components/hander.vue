@@ -31,15 +31,34 @@
           @click="toggleFullScreen"
         ></i>
       </div>
+      <div class="i18n-container">
+        <el-dropdown @command="changeLang" trigger="click" popper-class="i18n-dropdown">
+          <i class="iconfont icon-shuyi-fanyi-36"></i>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item
+                class="active"
+                v-for="item in i18nList"
+                :key="item.value"
+                :command="item.value"
+              >
+                {{ item.name }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType } from 'vue'
+import { computed, ref, type PropType } from 'vue'
 import type { RouteRecordNormalized } from 'vue-router'
 import { useThemeStore } from '@/stores'
 import { useScreenfull } from '@/hooks/screenfull'
+import { useLangStore } from '@/stores'
+import { type Lnag } from '@/stores/modules/lang'
 
 defineProps({
   hander: { type: Object as PropType<RouteRecordNormalized[]>, default: () => ({}) },
@@ -49,6 +68,7 @@ const emit = defineEmits(['changeHander'])
 
 const themeStore = useThemeStore()
 const { isFullscreen, toggleFullScreen } = useScreenfull()
+const { langList, handleChangeLang, lang } = useLangStore()
 
 const handleNav = (path: string) => {
   emit('changeHander', path)
@@ -57,6 +77,15 @@ const handleNav = (path: string) => {
 const theme = ref(themeStore.theme)
 const changeTheme = (val: string | boolean | number) => {
   if (typeof val === 'string') themeStore.toggleTheme(val)
+}
+
+const i18nList = computed(() => {
+  return langList.filter((item) => item.value !== lang)
+})
+
+const changeLang = (val: Lnag) => {
+  handleChangeLang(val)
+  location.reload()
 }
 </script>
 
@@ -113,7 +142,8 @@ const changeTheme = (val: string | boolean | number) => {
       }
     }
 
-    .full-screen-container {
+    .full-screen-container,
+    .i18n-container {
       .iconfont {
         font-size: 20px;
         font-weight: bold;

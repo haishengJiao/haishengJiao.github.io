@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useThemeStore } from '@/stores'
+import { useThemeStore, useLangStore } from '@/stores'
+import { getStorageLanguage } from '@/lang'
+import i18n from '@/lang'
+const { t } = i18n.global
+import { setPageTitle } from '@/utils'
 import Home from '@/views/home/index.vue'
 import dashboard from './dashboard'
 import vue from './vue'
@@ -11,7 +15,10 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        pageTitle: t('router.home')
+      }
     },
     {
       path: '/layout',
@@ -32,7 +39,11 @@ router.beforeEach((to, from, next) => {
     themeStore.toggleThemeColor(themeColor ? themeColor : '#E64C65')
     themeStore.toggleHoverColor(hoverColor ? hoverColor : '#CA4359')
     themeStore.toggleTheme(theme ? theme : 'light')
+
+    const langStore = useLangStore()
+    langStore.handleChangeLang(getStorageLanguage())
   }
+  setPageTitle(to.meta.pageTitle as string)
   next()
 })
 

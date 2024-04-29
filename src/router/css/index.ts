@@ -1,10 +1,14 @@
+import i18n from '@/lang'
+const { t } = i18n.global
+
 export default [
   {
     path: 'css',
     name: 'css',
     component: () => import('@/views/css/index.vue'),
     meta: {
-      title: 'css',
+      title: t('router.css'),
+      pageTitle: t('router.css'),
       index: 1,
       group: 'css',
       isShowSub: true

@@ -1,14 +1,14 @@
 <template>
   <div class="theme-container">
     <div class="display-flex flex-align margin-bottom-20">
-      <div>主颜色设置：</div>
+      <div>{{ $t('theme.setMainColor') }}：</div>
       <el-color-picker :model-value="themeColor" @active-change="changeTheme" />
     </div>
     <div class="display-flex flex-align margin-bottom-20">
-      <div>鼠标滑过颜色：</div>
+      <div>{{ $t('theme.setHoverColor') }}：</div>
       <el-color-picker :model-value="hoverColor" @active-change="changeHover" />
     </div>
-    <el-button type="primary" @click="handleReset">还原默认值</el-button>
+    <el-button type="primary" @click="handleReset">{{ $t('theme.resDefault') }}</el-button>
   </div>
 </template>
 

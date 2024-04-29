@@ -1,5 +1,8 @@
 <template>
-  <div class="dashboard-container display-flex flex-align flex-justify display-column">
+  <div
+    class="dashboard-container display-flex flex-align flex-justify display-column"
+    @click="handleEnter"
+  >
     <div class="timepiece-container">
       <div class="central-point"></div>
       <div class="pointer hour-pointer" ref="hourPointerRef"></div>
@@ -9,9 +12,7 @@
         <div class="minute-mark" v-for="i in 12" :key="i"></div>
       </div>
     </div>
-    <div>
-      <el-button type="primary" @click="handleEnter">进入</el-button>
-    </div>
+    <div></div>
   </div>
 </template>
 

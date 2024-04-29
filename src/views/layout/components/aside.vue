@@ -24,7 +24,6 @@ const defaultActive = ref('/layout/vue')
 watch(
   () => route,
   (val) => {
-    console.log(val.path)
     defaultActive.value = val.path
   },
   {

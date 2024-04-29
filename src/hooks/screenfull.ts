@@ -1,14 +1,16 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import { ElMessage } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
 export function useScreenfull() {
+  const { t } = useI18n()
   const isFullscreen = ref(false)
 
   const toggleFullScreen = async () => {
     const element = document.documentElement
     if (!element.requestFullscreen) {
       ElMessage({
-        message: '您的浏览器不支持全屏操作！',
+        message: t('home.noFullScreen'),
         type: 'warning'
       })
       return false

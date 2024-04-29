@@ -1,30 +1,5 @@
-// export default {
-//   path: 'vue',
-//   name: 'vue',
-//   redirect: '/layout/vue/vue2',
-//   component: () => import('@/views/vue/index.vue'),
-//   children: [
-//     {
-//       path: 'vue2',
-//       name: 'vue2',
-//       meta: {
-//         title: 'vue2'
-//       },
-//       component: () => import('@/views/vue/vue2.vue')
-//     },
-//     {
-//       path: 'vue3',
-//       name: 'vue3',
-//       meta: {
-//         title: 'vue3'
-//       },
-//       component: () => import('@/views/vue/vue3.vue')
-//     }
-//   ],
-//   meta: {
-//     title: 'vue'
-//   }
-// }
+import i18n from '@/lang'
+const { t } = i18n.global
 
 export default [
   {
@@ -32,7 +7,8 @@ export default [
     name: 'vue',
     component: () => import('@/views/vue/index.vue'),
     meta: {
-      title: 'vue',
+      title: t('router.vue'),
+      pageTitle: t('router.vue'),
       index: 1,
       group: 'vue',
       isShowSub: true
@@ -42,7 +18,8 @@ export default [
     path: 'theme',
     name: 'theme',
     meta: {
-      title: '主题色',
+      title: t('router.subjectColor'),
+      pageTitle: t('router.subjectColor'),
       index: 2,
       group: 'vue',
       isShowSub: true

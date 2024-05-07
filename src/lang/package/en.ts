@@ -1,4 +1,9 @@
 export default {
+  public: {
+    close: 'close',
+    magnify: 'magnify',
+    lessen: 'lessen'
+  },
   home: {
     noFullScreen: 'Your browser does not support full screen operation!'
   },
@@ -20,5 +25,22 @@ export default {
     vue: 'Vue',
     subjectColor: 'subject color',
     home: 'Home'
+  },
+  memo: {
+    memo: 'memorandum',
+    ascendingOrder: 'ascending order',
+    descendingOrder: 'descending order',
+    noTitle: 'No title',
+    deleteMemoTips: 'Are you sure you want to delete this memo?',
+    deleteMemo: 'Delete memorandum',
+    unfixation: 'unfixation',
+    fixation: 'fixation',
+    noMemo: 'No memorandum',
+    newMemorandum: 'New memorandum',
+    noteHeadingPlaceholder: 'Please enter the title of your note',
+    noteContentPlaceholder: 'Please enter the notes',
+    lastEdited: 'Last edited: {0}',
+    create: 'Created: {0}',
+    focusSaveHint: 'Losing focus is automatically saved'
   }
 }

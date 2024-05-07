@@ -1,3 +1,91 @@
+.text-ellipses {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hidden {
+  overflow: hidden;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.work-break-all {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.text-ellipses-line {
+  display: box; /**  对象作为伸缩盒子模型展示  **/
+  -webkit-box-orient: vertical; /**  设置或检索伸缩盒子对象的子元素的排列方式  **/
+  -webkit-line-clamp: 2; /**  显示的行数  **/
+  overflow: hidden; /**  隐藏超出的内容  **/
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all; /* 允许在单词内换行 */
+}
+
+.text-ellipses-line-2 {
+  display: box; /**  对象作为伸缩盒子模型展示  **/
+  -webkit-box-orient: vertical; /**  设置或检索伸缩盒子对象的子元素的排列方式  **/
+  -webkit-line-clamp: 2; /**  显示的行数  **/
+  overflow: hidden; /**  隐藏超出的内容  **/
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all; /* 允许在单词内换行 */
+}
+
+.text-ellipses-line-3 {
+  display: box; /**  对象作为伸缩盒子模型展示  **/
+  -webkit-box-orient: vertical; /**  设置或检索伸缩盒子对象的子元素的排列方式  **/
+  -webkit-line-clamp: 3; /**  显示的行数  **/
+  overflow: hidden; /**  隐藏超出的内容  **/
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all; /* 允许在单词内换行 */
+}
+
+.text-ellipses-line-6 {
+  display: box; /**  对象作为伸缩盒子模型展示  **/
+  -webkit-box-orient: vertical; /**  设置或检索伸缩盒子对象的子元素的排列方式  **/
+  -webkit-line-clamp: 6; /**  显示的行数  **/
+  overflow: hidden; /**  隐藏超出的内容  **/
+  text-overflow: ellipsis;
+  white-space: normal;
+  word-break: break-all; /* 允许在单词内换行 */
+}
+
+.word-break-break-word {
+  word-break: break-word; /* 按单词换行 */
+}
+
 .iconfont {
   cursor: pointer;
+}
+
+.theme-color {
+  color: var(--theme-color) !important;
+}
+
+.hover-color {
+  color: var(--hover-color) !important;
+}
+
+.el-dialog.self-dialog {
+  overflow: hidden;
+  padding: 0;
+  height: 64%;
+  transition: width 0.3s ease 0s, height 0.3s ease 0s; 
+
+  .el-dialog__header {
+    position: absolute;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .el-dialog__body {
+    height: 100%;
+  }
 }

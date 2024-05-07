@@ -14,6 +14,14 @@ html.dark {
   --bs-03: rgb(67 67 67 / 50%);
   --bs-04: rgb(0 0 0 / 30%);
   --color-01: #e5eaf3;
+  --color-02: #333;
+  --memo-bg-01: #313131;
+  --memo-bd-01: #4b4b4b;
+  --memo-bs-01: rgb(255 255 255 / 12%);
+  --memo-gradient-01: linear-gradient(0deg, #ffc927, #ffa403);
+  --memo-dialog-bg-01: var(--bg-02);
+  --memo-dialog-bg-02: #595959;
+  --memo-dialog-bg-03: #5d5d5d;
 }
 
 :root {
@@ -32,4 +40,12 @@ html.dark {
   --bs-03: rgb(185 185 185 / 50%);
   --bs-04: rgb(163 163 163 / 30%);
   --color-01: #333;
+  --color-02: #fff;
+  --memo-bg-01: #fafafa;
+  --memo-bd-01: #e1e1e1;
+  --memo-bs-01: rgb(0 0 0 / 12%);
+  --memo-gradient-01: linear-gradient(0deg, #ffc927, #ffa403);
+  --memo-dialog-bg-01: #f0f1f4;
+  --memo-dialog-bg-02: #fff;
+  --memo-dialog-bg-03: #fff;
 }

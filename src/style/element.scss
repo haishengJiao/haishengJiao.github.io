@@ -5,11 +5,29 @@ html.dark {
   --el-color-primary-dark-2: var(--hover-color);
 }
 
-.el-button {
-  padding: 0 25px;
-  height: 36px;
+:root {
+  --el-border-radius-small: 16px;
+
+  .el-button {
+    padding: 0 25px;
+    height: 36px;
+  }
+
+  .el-button--small {
+    padding: 5px 11px;
+    height: 24px;
+  }
+  
+  .el-color-dropdown__btns .el-button {
+    display: none;
+  }
+  
+  .el-dialog__body {
+    color: var(--color-01);
+  }
+
+  .el-notification {
+    --el-notification-close-hover-color: var(--hover-color);
+  }
 }
 
-.el-color-dropdown__btns .el-button {
-  display: none;
-}

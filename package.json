@@ -17,8 +17,12 @@
     "prepare": "husky install && npx husky add .husky/pre-commit \"npm run lint:all\""
   },
   "dependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.11",
     "element-plus": "^2.7.1",
     "pinia": "^2.1.7",
+    "uuid": "^9.0.1",
     "vue": "^3.4.21",
     "vue-i18n": "^9.13.1",
     "vue-router": "^4.3.0"
@@ -27,6 +31,7 @@
     "@rushstack/eslint-patch": "^1.1.4",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.12.5",
+    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
     "@vitejs/plugin-vue": "^5.0.4",

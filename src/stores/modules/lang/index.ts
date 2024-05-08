@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { getBrowserLanguage } from '@/lang'
+import { encrypt } from '@/utils/crypto'
 import i18n from '@/lang'
 
 type LANG = 'zh_hant' | 'zh_CN' | 'en_US' | 'ko'
@@ -26,7 +27,7 @@ export const useLangStore = defineStore('lang', {
         this.currentLang = val
       }
       i18n.global.locale.value = this.currentLang as LANG
-      localStorage.setItem('LANG', val)
+      localStorage.setItem(encrypt('LANG'), encrypt(val))
     }
   }
 })

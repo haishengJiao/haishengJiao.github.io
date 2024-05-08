@@ -6,8 +6,6 @@ html.dark {
 }
 
 :root {
-  --el-border-radius-small: 16px;
-
   .el-button {
     padding: 0 25px;
     height: 36px;
@@ -28,5 +26,24 @@ html.dark {
 
   .el-notification {
     --el-notification-close-hover-color: var(--hover-color);
+  }
+
+  .el-dialog.self-dialog {
+    --el-dialog-border-radius: 16px;
+
+    overflow: hidden;
+    padding: 0;
+    height: 64%;
+    transition: width 0.3s ease 0s, height 0.3s ease 0s;
+
+    .el-dialog__header {
+      position: absolute;
+      padding: 10px;
+      width: 100%;
+    }
+
+    .el-dialog__body {
+      height: 100%;
+    }
   }
 }

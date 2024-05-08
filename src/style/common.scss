@@ -73,19 +73,18 @@
   color: var(--hover-color) !important;
 }
 
-.el-dialog.self-dialog {
+.dashboard-item-container {
   overflow: hidden;
-  padding: 0;
-  height: 64%;
-  transition: width 0.3s ease 0s, height 0.3s ease 0s;
+  width: 150px;
+  height: 150px;
+  border-radius: var(--border-radius-16);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s;
 
-  .el-dialog__header {
-    position: absolute;
-    padding: 10px;
-    width: 100%;
-  }
+  --content-padding: 0 10px;
 
-  .el-dialog__body {
-    height: 100%;
+  &:hover {
+    box-shadow: 0 0 10px var(--memo-bs-01);
   }
 }

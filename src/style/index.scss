@@ -3,3 +3,22 @@
 @import './element';
 @import './theme';
 @import './common';
+
+:root {
+  --border-radius-16: 16px;
+}
+
+#nprogress {
+  .bar {
+    background: var(--theme-color) !important;
+  }
+
+  .peg {
+    box-shadow: 0 0 10px var(--theme-color), 0 0 5px var(--theme-color);
+  }
+
+  .spinner-icon {
+    border-top-color: var(--theme-color);
+    border-left-color: var(--theme-color);
+  }
+}

@@ -1,5 +1,6 @@
 import * as VueI18n from 'vue-i18n'
 import { type Lnag } from '@/stores/modules/lang'
+import { encrypt, decrypt } from '@/utils/crypto'
 import zh_CN from './package/zn'
 import zh_hant from './package/hant'
 import en_US from './package/en'
@@ -20,11 +21,11 @@ export const getBrowserLanguage = (): Lnag => {
 }
 
 export const getStorageLanguage = (): Lnag => {
-  const language = localStorage.getItem('LANG') as Lnag
+  const language = localStorage.getItem(encrypt('LANG')) as Lnag
   if (!language) {
     return getBrowserLanguage()
   }
-  return language
+  return decrypt(language) as Lnag
 }
 
 const i18n = VueI18n.createI18n({

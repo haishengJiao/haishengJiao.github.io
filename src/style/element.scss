@@ -8,12 +8,17 @@ html.dark {
 :root {
   .el-button {
     padding: 0 25px;
-    height: 36px;
+    height: 32px;
   }
 
   .el-button--small {
-    padding: 5px 11px;
+    padding: 5px 14px;
     height: 24px;
+  }
+
+  .el-button--large {
+    padding: 0 35px;
+    height: 36px;
   }
 
   .el-color-dropdown__btns .el-button {
@@ -38,6 +43,7 @@ html.dark {
 
     .el-dialog__header {
       position: absolute;
+      z-index: 1;
       padding: 10px;
       width: 100%;
     }
@@ -45,5 +51,9 @@ html.dark {
     .el-dialog__body {
       height: 100%;
     }
+  }
+
+  .el-form {
+    --el-form-label-font-size: 12px;
   }
 }

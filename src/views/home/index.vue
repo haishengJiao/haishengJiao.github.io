@@ -1,6 +1,6 @@
 <template>
   <div
-    class="dashboard-container display-flex flex-align flex-justify display-column"
+    class="dashboard-container w-100-h-100 display-flex flex-align flex-justify display-column"
     @click="handleEnter"
   >
     <div class="timepiece-container">
@@ -77,8 +77,6 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .dashboard-container {
-  width: 100%;
-  height: 100%;
   background-color: var(--bg-08);
   gap: 42px;
 

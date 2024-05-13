@@ -6,7 +6,7 @@
     draggable
     :show-close="false"
     class="self-dialog"
-    :style="{ height: isFullScreen ? '100%' : '64%' }"
+    :style="{ height: isFullScreen ? '100%' : '64%', 'min-height': '450px' }"
     :before-close="handleClose"
   >
     <div class="operation display-flex flex-align">

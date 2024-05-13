@@ -15,3 +15,12 @@ export const setPageTitle = (title: string) => {
 export const generateUniqueId = (): string => {
   return v4()
 }
+
+/**
+ * 补零
+ * @param num 待填充的数字
+ * @returns 返回填充后的字符串
+ */
+export const padZeroIfNeeded = (num: number): string => {
+  return num < 10 ? '0' + num : String(num)
+}

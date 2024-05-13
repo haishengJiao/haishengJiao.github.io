@@ -4,10 +4,10 @@
     @click="dialogVisible = !dialogVisible"
     title="chat"
   >
-    <img src="@/assets/svg/aibot.svg" alt="" />
+    <img class="w-100-h-100" src="@/assets/svg/aibot.svg" alt="" />
   </div>
   <self-dialog v-model:show="dialogVisible">
-    <iframe src="https://chat18.aichatos8.xyz/#/" frameborder="0"></iframe>
+    <iframe class="w-100-h-100" src="https://chat18.aichatos8.xyz/#/" frameborder="0"></iframe>
   </self-dialog>
 </template>
 
@@ -20,15 +20,5 @@ const dialogVisible = ref(false)
 <style scoped lang="scss">
 .chat-container {
   background-color: #0ea27e;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
-
-iframe {
-  width: 100%;
-  height: 100%;
 }
 </style>

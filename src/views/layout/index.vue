@@ -1,5 +1,5 @@
 <template>
-  <div class="common-layout display-flex">
+  <div class="common-layout w-100-h-100 display-flex">
     <el-container>
       <el-header>
         <j-header :hander="hander" :active="activeHander" @change-hander="changeHander"></j-header>
@@ -50,8 +50,6 @@ const changeHander = (path: string) => {
 
 <style scoped lang="scss">
 .common-layout {
-  width: 100%;
-  height: 100%;
   background-color: var(--bg-02);
   transition: all 0.2s;
 

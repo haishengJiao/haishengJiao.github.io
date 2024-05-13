@@ -2,12 +2,14 @@
   <div class="dashboard-container display-flex flex-align flex-wrap">
     <memo></memo>
     <chat-ai></chat-ai>
+    <calendar></calendar>
   </div>
 </template>
 
 <script setup lang="ts">
 import Memo from './Memo/index.vue'
 import ChatAi from './ChatGPT/index.vue'
+import Calendar from './Calendar/index.vue'
 </script>
 
 <style scoped lang="scss">

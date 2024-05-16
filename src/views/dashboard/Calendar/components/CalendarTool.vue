@@ -21,7 +21,7 @@
         </ul>
       </div>
       <div class="tool-view flex-1">
-        <el-scrollbar height="100%">
+        <el-scrollbar height="100%" ref="toolScrollbarRef">
           <transition name="tool-slide">
             <div class="view-date-container" v-show="toolsSegmentedActive === 0">
               <div class="view-date display-flex flex-wrap">
@@ -42,38 +42,38 @@
                     </el-form-item>
                     <el-form-item label="相差天数" label-width="100px">
                       <div class="number-day display-flex flex-align">
-                        <span>{{ naturalDayForm.result }}</span
+                        <span>{{ naturalDayComputed }}</span
                         >天
                       </div>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="primary" style="width: 240px">重置</el-button>
+                      <el-button type="primary" style="width: 240px" @click="handleNaturalDayReset"
+                        >重置</el-button
+                      >
                     </el-form-item>
                   </el-form>
                 </div>
                 <div class="workday">
-                  <el-form :model="naturalDayForm">
+                  <el-form :model="workdayForm">
                     <el-form-item>
                       <div>工作日间隔计算：</div>
                     </el-form-item>
                     <el-form-item label="开始时间" label-width="100px">
-                      <el-date-picker
-                        v-model="naturalDayForm.start"
-                        :clearable="false"
-                        type="date"
-                      />
+                      <el-date-picker v-model="workdayForm.start" :clearable="false" type="date" />
                     </el-form-item>
                     <el-form-item label="结束时间" label-width="100px">
-                      <el-date-picker v-model="naturalDayForm.end" :clearable="false" type="date" />
+                      <el-date-picker v-model="workdayForm.end" :clearable="false" type="date" />
                     </el-form-item>
                     <el-form-item label="相差" label-width="100px">
                       <div class="number-day display-flex flex-align">
-                        <span>{{ naturalDayForm.result }}</span
+                        <span>{{ workdayComputed }}</span
                         >个工作日
                       </div>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="primary" style="width: 240px">重置</el-button>
+                      <el-button type="primary" style="width: 240px" @click="handleworkdayReset"
+                        >重置</el-button
+                      >
                     </el-form-item>
                   </el-form>
                 </div>
@@ -92,7 +92,6 @@
                     <el-form-item label="间隔天数" label-width="100px">
                       <el-input-number
                         v-model="additionSubtractionForm.interval"
-                        :min="1"
                         placeholder="天数"
                         step-strictly
                         style="width: 160px"
@@ -100,11 +99,16 @@
                     </el-form-item>
                     <el-form-item label="结果" label-width="100px">
                       <div class="result-day display-flex flex-align">
-                        {{ additionSubtractionForm.result }}
+                        {{ additionSubtractionComputed }}
                       </div>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="primary" style="width: 240px">重置</el-button>
+                      <el-button
+                        type="primary"
+                        style="width: 240px"
+                        @click="handleAdditionSubtractionReset"
+                        >重置</el-button
+                      >
                     </el-form-item>
                   </el-form>
                 </div>
@@ -120,26 +124,31 @@
                   :clearable="false"
                   format="YYYY"
                   value-format="YYYY"
+                  @change="handleChangeFestivalYear"
                 />
                 <span>选择日期后自动更新当前节日</span>
               </div>
               <ul class="time-line">
-                <li class="time-line-item" v-for="i in 12" :key="i">
+                <li class="time-line-item" v-for="item in festivalsList" :key="item.ym">
                   <div class="item-tail"></div>
                   <div class="item-node"></div>
                   <div class="item-wrapper">
                     <div class="warpper-title display-flex flex-align">
-                      <div class="title-month">{{ i }}</div>
+                      <div class="title-month">{{ item.month }}</div>
                       <div>
-                        <div class="title-en">Jan</div>
+                        <div class="title-en">{{ monthList[item.month] }}</div>
                         <div class="title-unit">月</div>
                       </div>
                     </div>
                     <div class="warpper-content display-flex flex-wrap">
-                      <div v-for="item in 31" :key="item">
-                        <span>元旦</span>
-                        <span>[冬月二十 01-01]</span>
-                        <span class="">已过<span class="overstriking">10</span>天</span>
+                      <div v-for="f in item.festivals" :key="f.name">
+                        <span>{{ f.name }}</span>
+                        <span>[{{ f.lunarTime }} {{ f.solarTime }}]</span>
+                        <span
+                          >{{ f.isFormerly ? '已过' : '还有'
+                          }}<span class="overstriking">{{ f.time }}</span
+                          >天</span
+                        >
                       </div>
                     </div>
                   </div>
@@ -154,10 +163,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, type Ref } from 'vue'
 import dayjs from 'dayjs'
+import { Solar, Lunar, HolidayUtil, SolarYear } from 'lunar-typescript'
 
-const toolsSegmentedActive = ref(0)
+const props = defineProps({
+  weekMap: {
+    type: Array<string>,
+    default: []
+  }
+})
+
+const toolsSegmentedActive = ref(1)
 const toolsSegmentedHeight = ref(34)
 const toolsSegmentedList = ref([
   { value: 0, label: '日期差计算' },
@@ -166,17 +183,153 @@ const toolsSegmentedList = ref([
 const handleToolsSegmented = (val: number) => {
   toolsSegmentedActive.value = val
 }
+const ymd = dayjs().format('YYYY-MM-DD')
 const naturalDayForm = ref({
-  start: '',
-  end: '',
-  result: 0
+  start: ymd,
+  end: ymd
 })
+const naturalDayComputed = computed(() => {
+  const start = Solar.fromDate(dayjs(naturalDayForm.value.start).toDate())
+  const end = Solar.fromDate(dayjs(naturalDayForm.value.end).toDate())
+  return end.subtract(start)
+})
+const handleNaturalDayReset = () => {
+  naturalDayForm.value.start = ymd
+  naturalDayForm.value.end = ymd
+}
+
+const workdayForm = ref({
+  start: ymd,
+  end: ymd
+})
+const workdayComputed = computed(() => {
+  let count = 0
+  const start = new Date(workdayForm.value.start)
+  const end = new Date(workdayForm.value.end)
+
+  while (start <= end) {
+    if (!isHoliday(start)) {
+      count++
+    }
+    start.setDate(start.getDate() + 1)
+  }
+  return count
+})
+const isHoliday = (start: Date) => {
+  if (HolidayUtil.getHoliday(dayjs(start).format('YYYY-MM-DD'))?.isWork()) {
+    // 调休上班
+    return false
+  } else if (HolidayUtil.getHoliday(dayjs(start).format('YYYY-MM-DD'))?.isWork() === false) {
+    // 法定节假日
+    return true
+  } else {
+    return start.getDay() === 0 || start.getDay() === 6
+  }
+}
+const handleworkdayReset = () => {
+  workdayForm.value.start = ymd
+  workdayForm.value.end = ymd
+}
+
 const additionSubtractionForm = ref({
-  start: '',
-  interval: 1,
-  result: '2024年05月11日 周六'
+  start: ymd,
+  interval: 1
 })
-const festivalYear = ref(dayjs().year())
+const additionSubtractionComputed = computed(() => {
+  const start = Solar.fromDate(dayjs(additionSubtractionForm.value.start).toDate())
+  const result = start.next(additionSubtractionForm.value.interval)
+  const ymd = dayjs(result.toString()).format('YYYY年MM月DD日')
+  const week = props.weekMap[result.getWeek()]
+  return `${ymd} ${week}`
+})
+const handleAdditionSubtractionReset = () => {
+  additionSubtractionForm.value.start = ymd
+  additionSubtractionForm.value.interval = 1
+}
+
+const monthList = [
+  '',
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
+const festivalYear = ref(`${dayjs().year()}`)
+const toolScrollbarRef = ref()
+interface FestivalsList {
+  year: number
+  month: number
+  ym: string
+  festivals: Festivals[]
+}
+interface Festivals {
+  name: string
+  solarTime: string
+  lunarTime: string
+  time: number
+  isFormerly: boolean
+}
+const festivalsList: Ref<FestivalsList[]> = ref([])
+const getFestivalsList = () => {
+  const arr: FestivalsList[] = []
+  const months = SolarYear.fromDate(dayjs(festivalYear.value).toDate()).getMonths()
+  const ymdSolar = Solar.fromDate(dayjs(ymd).toDate())
+  months.forEach((month) => {
+    const days = month.getDays()
+    const y = month.getYear()
+    const m = month.getMonth()
+    const obj = {
+      year: y,
+      month: m,
+      ym: `${y}-${m}`,
+      festivals: [] as Festivals[]
+    }
+    days.forEach((day) => {
+      const toDate = dayjs(day.toString()).toDate()
+      const solarDays = Solar.fromDate(toDate)
+      const lunarDays = Lunar.fromDate(toDate)
+      const subtract = solarDays.subtract(ymdSolar)
+      const solarFestivals = solarDays.getFestivals()
+      const solarOtherFestivals = solarDays.getOtherFestivals()
+      const lunarFestivals = lunarDays.getFestivals()
+      const lunarOtherFestivals = lunarDays.getOtherFestivals()
+      const list = [
+        ...solarFestivals,
+        ...solarOtherFestivals,
+        ...lunarFestivals,
+        ...lunarOtherFestivals
+      ]
+      if (list.length > 0) {
+        list.forEach((f) => {
+          const festivalsInfo = {
+            name: f,
+            solarTime: dayjs(solarDays.toYmd()).format('MM-DD'),
+            lunarTime: `${lunarDays.getMonthInChinese()}月${lunarDays.getDayInChinese()}`,
+            time: Math.abs(subtract),
+            isFormerly: subtract < 0
+          }
+
+          obj.festivals.push(festivalsInfo)
+        })
+      }
+    })
+    arr.push(obj)
+  })
+  festivalsList.value = arr
+}
+getFestivalsList()
+const handleChangeFestivalYear = () => {
+  getFestivalsList()
+  toolScrollbarRef.value.setScrollTop(0)
+}
 </script>
 
 <style scoped lang="scss">
@@ -291,7 +444,6 @@ const festivalYear = ref(dayjs().year())
       --el-input-icon-color: var(--calendar-color-06);
       --el-fill-color-light: var(--calendar-dialog-bg-08);
       --el-input-border-radius: 8px;
-      --el-disabled-text-color: var(--calendar-color-07);
       --el-border: none;
 
       .el-input-number__increase,

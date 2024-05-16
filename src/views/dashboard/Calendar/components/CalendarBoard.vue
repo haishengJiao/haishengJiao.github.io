@@ -1,7 +1,7 @@
 <template>
   <div class="calendar-board w-100-h-100">
     <div class="display-flex w-100-h-100">
-      <div class="calendar-info flex-1 display-flex display-column">
+      <div class="calendar-info flex-1 display-flex display-column" @wheel.passive="handleWheel">
         <div class="select-calendar display-flex flex-align">
           <el-date-picker
             v-model="selectedYear"
@@ -52,13 +52,17 @@
             </li>
           </ul>
           <ul class="list display-flex flex-wrap flex-1">
-            <li v-for="item in daysList" :key="item.ymd" @click="handleClickDay(item)">
+            <li
+              v-for="item in daysList"
+              :key="item.ymd"
+              @click="handleClickDay(item, !item.ymd.includes(selectedMonth))"
+            >
               <div
                 class="item-container w-100-h-100 display-flex display-column flex-align flex-justify"
                 :class="{
                   'rest-bg': item.isRest,
                   'duty-bg': item.isWork,
-                  'other-month': item.currentMonth !== item.month,
+                  'other-month': !item.ymd.includes(selectedMonth),
                   'today-bg': item.ymd === currentDay,
                   'selected-bg': item.ymd === selectedDay
                 }"
@@ -93,79 +97,111 @@
       </div>
       <div class="today-info display-flex display-column">
         <div class="today-card display-flex display-column flex-align">
-          <div class="today-card-header">2024-05-09 周四</div>
-          <div class="today-card-content">9</div>
-          <div class="today-card-chinese">二〇二四年三月廿三</div>
-          <div class="chinese-zodiac">甲辰(龙)年</div>
-          <div class="which-day">本年第18周， 第122天</div>
+          <div class="today-card-header">{{ dayInfo.ymd }} {{ weekMap[dayInfo.week] }}</div>
+          <div class="today-card-content">{{ dayInfo.day }}</div>
+          <div class="today-card-chinese">{{ dayInfo.fullChinese }}</div>
+          <div class="chinese-zodiac">{{ dayInfo.ganZhi }}({{ dayInfo.animals }})年</div>
+          <div class="which-day">本年第{{ dayInfo.weekTotal }}周， 第{{ dayInfo.daysTotal }}天</div>
         </div>
         <el-scrollbar height="100%">
           <ul class="today-other-list">
-            <li class="display-flex">
-              <span class="text flex-1">距离母亲节还有3天</span>
+            <li class="display-flex" v-if="festivalDistance">
+              <span class="text flex-1">{{ festivalDistance }}</span>
             </li>
             <li class="display-flex">
               <span class="tag animals">生肖</span>
-              <span class="text flex-1">龙</span>
+              <span class="text flex-1">{{ dayInfo.animals }}</span>
             </li>
             <li class="display-flex flex-align">
               <span class="tag constellation">星座</span>
-              <span class="text">金牛座</span>
+              <span class="text">{{ dayInfo.constellation }}</span>
               <div class="constellation-icon display-flex flex-align flex-justify">
                 <!-- 摩羯座 -->
-                <!-- <img src="@/assets/images/calendar/capricornus.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '摩羯'"
+                  src="@/assets/images/calendar/capricornus.png"
+                />
                 <!-- 水瓶座 -->
-                <!-- <img src="@/assets/images/calendar/aquarius.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '水瓶'"
+                  src="@/assets/images/calendar/aquarius.png"
+                />
                 <!-- 双鱼座 -->
-                <!-- <img src="@/assets/images/calendar/pisces.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '双鱼'"
+                  src="@/assets/images/calendar/pisces.png"
+                />
                 <!-- 白羊座 -->
-                <!-- <img src="@/assets/images/calendar/aries.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '白羊'"
+                  src="@/assets/images/calendar/aries.png"
+                />
                 <!-- 金牛座 -->
-                <img src="@/assets/images/calendar/taurus.png" />
+                <img
+                  v-if="dayInfo.constellation === '金牛'"
+                  src="@/assets/images/calendar/taurus.png"
+                />
                 <!-- 双子座 -->
-                <!-- <img src="@/assets/images/calendar/gemini.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '双子'"
+                  src="@/assets/images/calendar/gemini.png"
+                />
                 <!-- 巨蟹座 -->
-                <!-- <img src="@/assets/images/calendar/cancer.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '巨蟹'"
+                  src="@/assets/images/calendar/cancer.png"
+                />
                 <!-- 狮子座 -->
-                <!-- <img src="@/assets/images/calendar/leo.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '狮子'"
+                  src="@/assets/images/calendar/leo.png"
+                />
                 <!-- 处女座 -->
-                <!-- <img src="@/assets/images/calendar/virgo.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '处女'"
+                  src="@/assets/images/calendar/virgo.png"
+                />
                 <!-- 天秤座 -->
-                <!-- <img src="@/assets/images/calendar/libra.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '天枰'"
+                  src="@/assets/images/calendar/libra.png"
+                />
                 <!-- 天蝎座 -->
-                <!-- <img src="@/assets/images/calendar/scorpio.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '天蝎'"
+                  src="@/assets/images/calendar/scorpio.png"
+                />
                 <!-- 射手座 -->
-                <!-- <img src="@/assets/images/calendar/sagittarius.png" /> -->
+                <img
+                  v-if="dayInfo.constellation === '射手'"
+                  src="@/assets/images/calendar/sagittarius.png"
+                />
               </div>
             </li>
-            <li class="display-flex">
+            <li class="display-flex" v-if="festivalComputed">
               <span class="tag festival">节日</span>
-              <span class="text flex-1"
-                >母亲节，全国防灾减灾日，护士节母亲节，全国防灾减灾日，护士节母亲节，全国防灾减灾日，护士节母亲节，全国防灾减灾日，护士节</span
-              >
+              <span class="text flex-1">{{ festivalComputed }}</span>
             </li>
             <li class="display-flex">
               <span class="tag suitable">宜</span>
-              <span class="text flex-1"
-                >开市，交易，立券，纳财，动土，开光，出行，嫁娶，纳采，订盟，入学，开仓，出货财，纳畜，牧养，栽种，破土，启钻，安葬，立碑</span
-              >
+              <span class="text flex-1">{{ dayInfo.suitable.join('，') }}</span>
             </li>
             <li class="display-flex">
               <span class="tag avoid">忌</span>
-              <span class="text flex-1">无</span>
+              <span class="text flex-1">{{ dayInfo.avoid.join('，') }}</span>
             </li>
             <li class="display-flex">
               <span class="tag moon">月相</span>
-              <span class="text flex-1">峨眉月</span>
+              <span class="text flex-1">{{ dayInfo.moon }}</span>
               <span class="tag moon" style="margin-left: auto">物候</span>
-              <span class="text flex-1" style="margin-right: auto">温风至</span>
+              <span class="text flex-1" style="margin-right: auto">{{ dayInfo.phenology }}</span>
             </li>
             <li class="display-flex display-column">
-              <span class="text flex-1">喜神方位：西南</span>
-              <span class="text flex-1">喜神方位：西南</span>
-              <span class="text flex-1">喜神方位：西南</span>
-              <span class="text flex-1">喜神方位：西南</span>
-              <span class="text flex-1">喜神方位：西南</span>
+              <span class="text flex-1">喜神方位：{{ dayInfo.euphoricOrientation }}</span>
+              <span class="text flex-1">阳贵神方位：{{ dayInfo.yangGUIGodAzimuth }}</span>
+              <span class="text flex-1">阴贵神方位：{{ dayInfo.yinGUIGodAzimuth }}</span>
+              <span class="text flex-1">福神方位：{{ dayInfo.blessingOrientation }}</span>
+              <span class="text flex-1">财神方位：{{ dayInfo.mammonOrientation }}</span>
             </li>
           </ul>
         </el-scrollbar>
@@ -177,25 +213,34 @@
 <script setup lang="ts">
 import { computed, ref, type Ref } from 'vue'
 import dayjs from 'dayjs'
-import { Solar, SolarMonth, Lunar, HolidayUtil } from 'lunar-typescript'
+import { Solar, SolarMonth, Lunar, HolidayUtil, SolarUtil, SolarWeek } from 'lunar-typescript'
 import { padZeroIfNeeded } from '@/utils'
 import { encrypt, decrypt } from '@/utils/crypto'
+import { useThrottleFn } from '@vueuse/core'
 
-const selectedYear = ref(`${dayjs().year()}`)
-const selectedMonth = ref(`${dayjs().year()}-${padZeroIfNeeded(dayjs().month() + 1)}`)
-const selectedDay = ref(
-  `${dayjs().year()}-${padZeroIfNeeded(dayjs().month() + 1)}-${padZeroIfNeeded(dayjs().date())}`
-)
-const currentYear = ref(`${dayjs().year()}`)
-const currentMonth = ref(`${dayjs().year()}-${padZeroIfNeeded(dayjs().month() + 1)}`)
-const currentDay = ref(
-  `${dayjs().year()}-${padZeroIfNeeded(dayjs().month() + 1)}-${padZeroIfNeeded(dayjs().date())}`
-)
+defineProps({
+  weekMap: {
+    type: Array<string>,
+    default: []
+  }
+})
+
+const dayjsYear = `${dayjs().year()}`
+const dayjsMonth = `${dayjs().year()}-${padZeroIfNeeded(dayjs().month() + 1)}`
+const dayjsDay = `${dayjs().year()}-${padZeroIfNeeded(dayjs().month() + 1)}-${padZeroIfNeeded(
+  dayjs().date()
+)}`
+const selectedYear = ref(dayjsYear)
+const selectedMonth = ref(dayjsMonth)
+const selectedDay = ref(dayjsDay)
+const currentYear = ref(dayjsYear)
+const currentMonth = ref(dayjsMonth)
+const currentDay = ref(dayjsDay)
 
 const CALENDAR_WEEK_SWITCH_key = encrypt('CALENDAR_WEEK_SWITCH')
 const weekSwitchLocal = localStorage.getItem(CALENDAR_WEEK_SWITCH_key)
 const weekSwitch = ref(weekSwitchLocal !== null ? decrypt(weekSwitchLocal) === 'true' : false)
-const weekList = ref(['日', '一', '二', '三', '四', '五', '六'])
+const weekList: Ref<string[]> = ref([])
 const setWeekList = () => {
   if (weekSwitch.value) {
     weekList.value = ['一', '二', '三', '四', '五', '六', '日']
@@ -225,21 +270,43 @@ interface DaysList {
   chineseOtherFestivals: Array<string>
   isWork: boolean // 调休上班
   isRest: boolean // 法定节假日
-  week: number // 周六日
+  week: number
+  fullChinese: string // 完整的农历
   monthInChineseNumber: number // 数字农历月
   monthInChinese: string // 农历月
   dayInChineseNumber: number // 数字农历日
   dayInChinese: string // 农历日
   solarTerms: string // 节气
+  daysTotal: number
+  weekTotal: number
+  animals: string // 生肖
+  constellation: string // 星座
+  suitable: string[] // 宜
+  avoid: string[] // 忌
+  moon: string // 月相
+  phenology: string // 物候
+  euphoricOrientation: string // 喜神方位
+  yangGUIGodAzimuth: string // 阳贵神方位
+  yinGUIGodAzimuth: string // 阴贵神方位
+  blessingOrientation: string // 福神方位
+  mammonOrientation: string // 财神方位
+  ganZhi: string // 干支纪年（新年以正月初一起算）
+  shuJiu: string // 数九
+  sanFu: string // 三伏
 }
 const daysList: Ref<DaysList[]> = ref([])
-
+const dayInfo: Ref<DaysList> = ref({} as DaysList)
+const getSelectedDayInfo = () => {
+  daysList.value.forEach((item) => {
+    if (item.ymd === selectedDay.value) {
+      dayInfo.value = item
+    }
+  })
+}
 const getViewDayList = () => {
-  daysList.value = []
-  const currentDate = Solar.fromDate(dayjs(selectedDay.value).toDate())
+  const currentSelectedDate = Solar.fromDate(dayjs(currentDay.value).toDate())
   const currentSolarMonth = SolarMonth.fromDate(dayjs(selectedMonth.value).toDate())
   const currentMonthsDays = currentSolarMonth.getDays()
-
   // 获取下一个月得天数
   const nextMonth = currentSolarMonth.next(1).toString()
   const nextSolarMonth = SolarMonth.fromDate(dayjs(nextMonth).toDate())
@@ -254,6 +321,7 @@ const getViewDayList = () => {
   const currentMonthFirstWeek = Solar.fromDate(currentMonthFirstDay).getWeek()
   // 根据当前月第一天周几来获取显示上一个月得天数
   const lastSliceLength = lastMonthsDays.length - currentMonthFirstWeek
+  // + 1 是为了解决切换每周第一天是周日还是周一
   const lastSliceLen = weekSwitch.value ? lastSliceLength + 1 : lastSliceLength
   const lastMonthsSliceDays = [...lastMonthsDays.slice(lastSliceLen)]
   // 下个月显示得天数等于 42 - 当前月天数 - 上个月显示得天数
@@ -262,34 +330,59 @@ const getViewDayList = () => {
   const viewDayList = [...lastMonthsSliceDays, ...currentMonthsDays, ...nextMonthsSliceDays]
   const daysArr = []
   for (var i = 0, j = viewDayList.length; i < j; i++) {
+    const year = viewDayList[i].getYear()
+    const month = viewDayList[i].getMonth()
+    const day = viewDayList[i].getDay()
     const ymd = viewDayList[i].toString()
     const isWork = HolidayUtil.getHoliday(ymd)?.isWork()
-    const lunarCalendar = Lunar.fromDate(dayjs(ymd).toDate())
+    const lunarCalendar = Lunar.fromDate(dayjs(ymd).toDate()) // 农历相关
+    const daysTotal = SolarUtil.getDaysInYear(year, month, day) // 本年第几天
+    const weekCalendar = SolarWeek.fromDate(dayjs(ymd).toDate(), 1)
+    const shuJiu = lunarCalendar.getShuJiu()?.getName() // 数九
+    const sanFu = lunarCalendar.getFu()?.getName() // 三伏
     const obj = {
-      year: viewDayList[i].getYear(),
-      month: viewDayList[i].getMonth(),
-      day: viewDayList[i].getDay(),
+      year,
+      month,
+      day,
       ymd,
-      currentYear: currentDate.getYear(),
-      currentMonth: currentDate.getMonth(),
-      currentDay: currentDate.getDay(),
-      currentYmd: currentDate.toString(),
+      currentYear: currentSelectedDate.getYear(),
+      currentMonth: currentSelectedDate.getMonth(),
+      currentDay: currentSelectedDate.getDay(),
+      currentYmd: currentSelectedDate.toString(),
       festivals: viewDayList[i].getFestivals(), // 节日
       otherFestivals: viewDayList[i].getOtherFestivals(), // 其他节日
       chineseFestivals: lunarCalendar.getFestivals(), // 农历节日
       chineseOtherFestivals: lunarCalendar.getOtherFestivals(), // 农历其他节日
-      week: viewDayList[i].getWeek(), // 周六日
+      week: viewDayList[i].getWeek(),
       isWork: isWork === true, // 调休上班
       isRest: isWork === false, // 法定节假日
+      fullChinese: lunarCalendar.toString(), // 完整的农历
       monthInChinese: lunarCalendar.getMonthInChinese(), // 农历月
       monthInChineseNumber: lunarCalendar.getMonth(), // 数字农历月
       dayInChineseNumber: lunarCalendar.getDay(), // 数字农历日
       dayInChinese: lunarCalendar.getDayInChinese(), // 农历日
-      solarTerms: lunarCalendar.getJieQi() // 节气
+      solarTerms: lunarCalendar.getJieQi(), // 节气
+      daysTotal,
+      weekTotal: weekCalendar.getIndexInYear(),
+      animals: lunarCalendar.getYearShengXiao(), // 生肖
+      constellation: viewDayList[i].getXingZuo(), // 星座
+      suitable: lunarCalendar.getDayYi(), // 宜
+      avoid: lunarCalendar.getDayJi(), // 忌
+      moon: lunarCalendar.getYueXiang(), // 月相
+      phenology: lunarCalendar.getWuHou(), // 物候
+      euphoricOrientation: lunarCalendar.getDayPositionXiDesc(), // 喜神方位
+      yangGUIGodAzimuth: lunarCalendar.getDayPositionYangGuiDesc(), // 阳贵神方位
+      yinGUIGodAzimuth: lunarCalendar.getDayPositionYinGuiDesc(), // 阴贵神方位
+      blessingOrientation: lunarCalendar.getDayPositionFuDesc(), // 福神方位
+      mammonOrientation: lunarCalendar.getDayPositionCaiDesc(), // 财神方位
+      ganZhi: lunarCalendar.getYearInGanZhi(), // 获取干支纪年（新年以正月初一起算）
+      shuJiu: shuJiu ? shuJiu : '', // 数九
+      sanFu: sanFu ? sanFu : '' // 三伏
     }
     daysArr.push(obj)
   }
   daysList.value = [...daysArr]
+  getSelectedDayInfo()
 }
 getViewDayList()
 
@@ -307,15 +400,17 @@ const handleFormatdayText = (item: DaysList) => {
   }
 }
 
-const handleClickDay = (item: DaysList) => {
+const handleClickDay = (item: DaysList, flag: boolean) => {
   selectedYear.value = String(item.year)
   selectedMonth.value = `${selectedYear.value}-${padZeroIfNeeded(item.month)}`
   selectedDay.value = `${selectedYear.value}-${padZeroIfNeeded(item.month)}-${padZeroIfNeeded(
     item.day
   )}`
   // 点击的不是当前月，需要获取新数据
-  if (item.month !== item.currentMonth) {
+  if (flag) {
     getViewDayList()
+  } else {
+    getSelectedDayInfo()
   }
 }
 
@@ -356,6 +451,49 @@ const handleClickToday = () => {
   selectedDay.value = currentDay.value
   getViewDayList()
 }
+
+const festivalDistance = computed(() => {
+  const { year, month, day, ymd, currentYear, currentMonth, currentDay } = dayInfo.value
+  const selectedDay = Solar.fromYmd(year, month, day)
+  const sameDay = Solar.fromYmd(currentYear, currentMonth, currentDay)
+  const sumDay = selectedDay.subtract(sameDay)
+  const dayTxt = dayjs(ymd).format('YYYY年MM月DD日')
+  if (sumDay === 0) {
+    return ''
+  } else if (sumDay > 0) {
+    const festival = festivalComputed.value?.split('，')[0]
+    return festival ? `距离${festival}还有${sumDay}天` : `距离${dayTxt}还有${sumDay}天`
+  } else {
+    const festival = festivalComputed.value?.split('，')[0]
+    return festival
+      ? `距离${festival}已经过去${Math.abs(sumDay)}天`
+      : `距离${dayTxt}已经过去${Math.abs(sumDay)}天`
+  }
+})
+const festivalComputed = computed(() => {
+  const {
+    festivals,
+    otherFestivals,
+    chineseFestivals,
+    chineseOtherFestivals,
+    solarTerms,
+    shuJiu,
+    sanFu
+  } = dayInfo.value
+  const arr = [...festivals, ...chineseFestivals, ...otherFestivals, ...chineseOtherFestivals]
+  if (solarTerms) arr.push(solarTerms)
+  if (shuJiu) arr.push(shuJiu)
+  if (sanFu) arr.push(sanFu)
+  return arr.join('，')
+})
+
+const handleWheel = useThrottleFn((e: WheelEvent) => {
+  if (e.deltaY > 0) {
+    handleNextMonth()
+  } else {
+    handleLastMonth()
+  }
+}, 200)
 </script>
 
 <style scoped lang="scss">
@@ -645,6 +783,7 @@ const handleClickToday = () => {
         }
 
         .avoid {
+          padding: 0 4px;
           background-color: #e24e4c;
         }
 

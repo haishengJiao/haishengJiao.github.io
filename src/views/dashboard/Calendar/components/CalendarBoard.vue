@@ -27,15 +27,15 @@
           </div>
           <transition name="today-fade">
             <div class="today-btn select-btn-public" v-if="isShowToday" @click="handleClickToday">
-              今
+              {{ $t('calendar.today') }}
             </div>
           </transition>
           <div class="week-switch">
             <el-switch
               v-model="weekSwitch"
               inline-prompt
-              active-text="一"
-              inactive-text="日"
+              :active-text="$t('calendar.Mon')"
+              :inactive-text="$t('calendar.Sun')"
               @change="handleChangeWeek"
             />
           </div>
@@ -46,7 +46,7 @@
               v-for="item in weekList"
               :key="item"
               class="flex-1 display-flex flex-justify"
-              :class="{ 'week-end': item === '六' || item === '日' }"
+              :class="{ 'week-end': item === $t('calendar.Sat') || item === $t('calendar.Sun') }"
             >
               {{ item }}
             </li>
@@ -67,8 +67,8 @@
                   'selected-bg': item.ymd === selectedDay
                 }"
               >
-                <div class="duty" v-if="item.isWork">班</div>
-                <div class="rest" v-if="item.isRest">休</div>
+                <div class="duty" v-if="item.isWork">{{ $t('calendar.workday') }}</div>
+                <div class="rest" v-if="item.isRest">{{ $t('calendar.dayOff') }}</div>
                 <div
                   class="number"
                   :class="{
@@ -100,8 +100,12 @@
           <div class="today-card-header">{{ dayInfo.ymd }} {{ weekMap[dayInfo.week] }}</div>
           <div class="today-card-content">{{ dayInfo.day }}</div>
           <div class="today-card-chinese">{{ dayInfo.fullChinese }}</div>
-          <div class="chinese-zodiac">{{ dayInfo.ganZhi }}({{ dayInfo.animals }})年</div>
-          <div class="which-day">本年第{{ dayInfo.weekTotal }}周， 第{{ dayInfo.daysTotal }}天</div>
+          <div class="chinese-zodiac">
+            {{ dayInfo.ganZhi }}({{ dayInfo.animals }}){{ $t('calendar.year') }}
+          </div>
+          <div class="which-day">
+            {{ $t('calendar.howYearManyDaysWeek', [dayInfo.weekTotal, dayInfo.daysTotal]) }}
+          </div>
         </div>
         <el-scrollbar height="100%">
           <ul class="today-other-list">
@@ -109,99 +113,109 @@
               <span class="text flex-1">{{ festivalDistance }}</span>
             </li>
             <li class="display-flex">
-              <span class="tag animals">生肖</span>
+              <span class="tag animals">{{ $t('calendar.animals') }}</span>
               <span class="text flex-1">{{ dayInfo.animals }}</span>
             </li>
             <li class="display-flex flex-align">
-              <span class="tag constellation">星座</span>
+              <span class="tag constellation">{{ $t('calendar.constellation') }}</span>
               <span class="text">{{ dayInfo.constellation }}</span>
               <div class="constellation-icon display-flex flex-align flex-justify">
                 <!-- 摩羯座 -->
                 <img
-                  v-if="dayInfo.constellation === '摩羯'"
+                  v-if="dayInfo.constellation === $t('calendar.capricorn')"
                   src="@/assets/images/calendar/capricornus.png"
                 />
                 <!-- 水瓶座 -->
                 <img
-                  v-if="dayInfo.constellation === '水瓶'"
+                  v-if="dayInfo.constellation === $t('calendar.aquarius')"
                   src="@/assets/images/calendar/aquarius.png"
                 />
                 <!-- 双鱼座 -->
                 <img
-                  v-if="dayInfo.constellation === '双鱼'"
+                  v-if="dayInfo.constellation === $t('calendar.pisces')"
                   src="@/assets/images/calendar/pisces.png"
                 />
                 <!-- 白羊座 -->
                 <img
-                  v-if="dayInfo.constellation === '白羊'"
+                  v-if="dayInfo.constellation === $t('calendar.aries')"
                   src="@/assets/images/calendar/aries.png"
                 />
                 <!-- 金牛座 -->
                 <img
-                  v-if="dayInfo.constellation === '金牛'"
+                  v-if="dayInfo.constellation === $t('calendar.taurus')"
                   src="@/assets/images/calendar/taurus.png"
                 />
                 <!-- 双子座 -->
                 <img
-                  v-if="dayInfo.constellation === '双子'"
+                  v-if="dayInfo.constellation === $t('calendar.gemini')"
                   src="@/assets/images/calendar/gemini.png"
                 />
                 <!-- 巨蟹座 -->
                 <img
-                  v-if="dayInfo.constellation === '巨蟹'"
+                  v-if="dayInfo.constellation === $t('calendar.cancer')"
                   src="@/assets/images/calendar/cancer.png"
                 />
                 <!-- 狮子座 -->
                 <img
-                  v-if="dayInfo.constellation === '狮子'"
+                  v-if="dayInfo.constellation === $t('calendar.leo')"
                   src="@/assets/images/calendar/leo.png"
                 />
                 <!-- 处女座 -->
                 <img
-                  v-if="dayInfo.constellation === '处女'"
+                  v-if="dayInfo.constellation === $t('calendar.virgo')"
                   src="@/assets/images/calendar/virgo.png"
                 />
                 <!-- 天秤座 -->
                 <img
-                  v-if="dayInfo.constellation === '天枰'"
+                  v-if="dayInfo.constellation === $t('calendar.libra')"
                   src="@/assets/images/calendar/libra.png"
                 />
                 <!-- 天蝎座 -->
                 <img
-                  v-if="dayInfo.constellation === '天蝎'"
+                  v-if="dayInfo.constellation === $t('calendar.scorpio')"
                   src="@/assets/images/calendar/scorpio.png"
                 />
                 <!-- 射手座 -->
                 <img
-                  v-if="dayInfo.constellation === '射手'"
+                  v-if="dayInfo.constellation === $t('calendar.sagittarius')"
                   src="@/assets/images/calendar/sagittarius.png"
                 />
               </div>
             </li>
             <li class="display-flex" v-if="festivalComputed">
-              <span class="tag festival">节日</span>
+              <span class="tag festival">{{ $t('calendar.festival') }}</span>
               <span class="text flex-1">{{ festivalComputed }}</span>
             </li>
             <li class="display-flex">
-              <span class="tag suitable">宜</span>
+              <span class="tag suitable">{{ $t('calendar.suitable') }}</span>
               <span class="text flex-1">{{ dayInfo.suitable.join('，') }}</span>
             </li>
             <li class="display-flex">
-              <span class="tag avoid">忌</span>
+              <span class="tag avoid">{{ $t('calendar.avoid') }}</span>
               <span class="text flex-1">{{ dayInfo.avoid.join('，') }}</span>
             </li>
             <li class="display-flex">
-              <span class="tag moon">月相</span>
-              <span class="text flex-1">{{ dayInfo.moon }}</span>
-              <span class="tag moon" style="margin-left: auto">物候</span>
+              <span class="tag moon">{{ $t('calendar.phaseMoon') }}</span>
+              <span class="text flex-1">{{ dayInfo.moon }}{{ $t('calendar.phaseMoonMonth') }}</span>
+              <span class="tag moon" style="margin-left: auto">{{ $t('calendar.phenology') }}</span>
               <span class="text flex-1" style="margin-right: auto">{{ dayInfo.phenology }}</span>
             </li>
             <li class="display-flex display-column">
-              <span class="text flex-1">喜神方位：{{ dayInfo.euphoricOrientation }}</span>
-              <span class="text flex-1">阳贵神方位：{{ dayInfo.yangGUIGodAzimuth }}</span>
-              <span class="text flex-1">阴贵神方位：{{ dayInfo.yinGUIGodAzimuth }}</span>
-              <span class="text flex-1">福神方位：{{ dayInfo.blessingOrientation }}</span>
-              <span class="text flex-1">财神方位：{{ dayInfo.mammonOrientation }}</span>
+              <span class="text flex-1"
+                >{{ $t('calendar.euphoricOrientation') }}{{ dayInfo.euphoricOrientation }}</span
+              >
+              <span class="text flex-1"
+                >{{ $t('calendar.yangGuiGodLocation') }}{{ dayInfo.yangGUIGodAzimuth }}</span
+              >
+              <span class="text flex-1"
+                >{{ $t('calendar.yinGuiGodLocation') }}{{ dayInfo.yinGUIGodAzimuth }}</span
+              >
+              <span class="text flex-1"
+                >{{ $t('calendar.locationBlessingGod') }}{{ dayInfo.blessingOrientation }}</span
+              >
+              <span class="text flex-1"
+                >{{ $t('calendar.locationGodWealth') }}{{ dayInfo.mammonOrientation }}</span
+              >
             </li>
           </ul>
         </el-scrollbar>
@@ -217,6 +231,7 @@ import { Solar, SolarMonth, Lunar, HolidayUtil, SolarUtil, SolarWeek } from 'lun
 import { padZeroIfNeeded } from '@/utils'
 import { encrypt, decrypt } from '@/utils/crypto'
 import { useThrottleFn } from '@vueuse/core'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   weekMap: {
@@ -224,6 +239,8 @@ defineProps({
     default: []
   }
 })
+
+const { t } = useI18n()
 
 const dayjsYear = `${dayjs().year()}`
 const dayjsMonth = `${dayjs().year()}-${padZeroIfNeeded(dayjs().month() + 1)}`
@@ -243,9 +260,25 @@ const weekSwitch = ref(weekSwitchLocal !== null ? decrypt(weekSwitchLocal) === '
 const weekList: Ref<string[]> = ref([])
 const setWeekList = () => {
   if (weekSwitch.value) {
-    weekList.value = ['一', '二', '三', '四', '五', '六', '日']
+    weekList.value = [
+      t('calendar.Mon'),
+      t('calendar.Tues'),
+      t('calendar.Wed'),
+      t('calendar.Thurs'),
+      t('calendar.Fri'),
+      t('calendar.Sat'),
+      t('calendar.Sun')
+    ]
   } else {
-    weekList.value = ['日', '一', '二', '三', '四', '五', '六']
+    weekList.value = [
+      t('calendar.Sun'),
+      t('calendar.Mon'),
+      t('calendar.Tues'),
+      t('calendar.Wed'),
+      t('calendar.Thurs'),
+      t('calendar.Fri'),
+      t('calendar.Sat')
+    ]
   }
 }
 setWeekList()
@@ -457,17 +490,22 @@ const festivalDistance = computed(() => {
   const selectedDay = Solar.fromYmd(year, month, day)
   const sameDay = Solar.fromYmd(currentYear, currentMonth, currentDay)
   const sumDay = selectedDay.subtract(sameDay)
-  const dayTxt = dayjs(ymd).format('YYYY年MM月DD日')
+  const y = dayjs(ymd).year()
+  const m = padZeroIfNeeded(dayjs(ymd).month() + 1)
+  const d = padZeroIfNeeded(dayjs(ymd).date())
+  const dayTxt = t('calendar.ymd', [y, m, d])
   if (sumDay === 0) {
     return ''
   } else if (sumDay > 0) {
     const festival = festivalComputed.value?.split('，')[0]
-    return festival ? `距离${festival}还有${sumDay}天` : `距离${dayTxt}还有${sumDay}天`
+    return festival
+      ? t('calendar.hasBeenDaysSinceUntil', [festival, sumDay])
+      : t('calendar.hasBeenDaysSinceUntil', [dayTxt, sumDay])
   } else {
     const festival = festivalComputed.value?.split('，')[0]
     return festival
-      ? `距离${festival}已经过去${Math.abs(sumDay)}天`
-      : `距离${dayTxt}已经过去${Math.abs(sumDay)}天`
+      ? t('calendar.hasBeenDaysSince', [festival, Math.abs(sumDay)])
+      : t('calendar.hasBeenDaysSince', [dayTxt, Math.abs(sumDay)])
   }
 })
 const festivalComputed = computed(() => {
@@ -530,7 +568,6 @@ const handleWheel = useThrottleFn((e: WheelEvent) => {
 
       .select-btn-public {
         margin-right: 5px;
-        width: 24px;
         height: 24px;
         line-height: 24px;
         text-align: center;
@@ -539,6 +576,7 @@ const handleWheel = useThrottleFn((e: WheelEvent) => {
       }
 
       .month-toggle-btn {
+        width: 24px;
         background-color: var(--calendar-dialog-bg-05);
 
         .iconfont {
@@ -563,6 +601,7 @@ const handleWheel = useThrottleFn((e: WheelEvent) => {
       }
 
       .today-btn {
+        padding: 0 6px;
         font-size: 12px;
         color: #fff;
         background-color: var(--theme-color);
@@ -620,7 +659,7 @@ const handleWheel = useThrottleFn((e: WheelEvent) => {
               position: absolute;
               top: 5px;
               right: 5px;
-              width: 16px;
+              padding: 0 2px;
               height: 16px;
               font-size: 12px;
               text-align: center;

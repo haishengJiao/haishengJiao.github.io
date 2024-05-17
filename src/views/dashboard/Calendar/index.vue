@@ -1,13 +1,13 @@
 <template>
   <div
     class="calendar-container dashboard-item-container display-flex display-column"
-    title="日历"
+    :title="$t('calendar.calendarTips')"
     @click="calendarDialogVisible = true"
   >
-    <div class="calendar-title">{{ yearMonth }}</div>
+    <div class="calendar-title">{{ $t('calendar.yearMonth', [year, month]) }}</div>
     <div class="calendar-content flex-1">
       <div class="today">{{ day }}</div>
-      <div class="day">第{{ daysTotal }}天 第{{ weekTotal }}周</div>
+      <div class="day">{{ $t('calendar.howManyDaysWeek', [daysTotal, weekTotal]) }}</div>
       <div class="week">{{ monthInChinese }}月{{ dayInChinese }} {{ weekMap[week] }}</div>
     </div>
   </div>
@@ -17,10 +17,16 @@
         <el-segmented v-model="segmentedValue" :options="segmentedOptions" />
       </div>
       <transition name="calendar-flip">
-        <calendar-board v-show="segmentedValue === '日历'" :week-map="weekMap"></calendar-board>
+        <calendar-board
+          v-show="segmentedValue === $t('calendar.calendar')"
+          :week-map="weekMap"
+        ></calendar-board>
       </transition>
       <transition name="calendar-flip">
-        <calendar-tool v-show="segmentedValue === '工具'" :week-map="weekMap"></calendar-tool>
+        <calendar-tool
+          v-show="segmentedValue === $t('calendar.tool')"
+          :week-map="weekMap"
+        ></calendar-tool>
       </transition>
     </div>
   </self-dialog>
@@ -32,13 +38,14 @@ import CalendarBoard from './components/CalendarBoard.vue'
 import CalendarTool from './components/CalendarTool.vue'
 import dayjs from 'dayjs'
 import { Solar, SolarUtil, SolarWeek, Lunar } from 'lunar-typescript'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const calendarDialogVisible = ref(false)
 
-const segmentedValue = ref('工具')
-const segmentedOptions = ['日历', '工具']
+const segmentedValue = ref(t('calendar.calendar'))
+const segmentedOptions = [t('calendar.calendar'), t('calendar.tool')]
 
-const yearMonth = ref(dayjs().format('YYYY年M月'))
 const year = ref(dayjs().year())
 const month = ref(dayjs().month() + 1)
 const day = ref(dayjs().date())
@@ -52,7 +59,15 @@ const lunarCalendar = Lunar.fromDate(toDate)
 const monthInChinese = lunarCalendar.getMonthInChinese()
 const dayInChinese = lunarCalendar.getDayInChinese()
 
-const weekMap = ref(['周日', '周一', '周二', '周三', '周四', '周五', '周六'])
+const weekMap = ref([
+  t('calendar.Sunday'),
+  t('calendar.Monday'),
+  t('calendar.Tuesday'),
+  t('calendar.Wednesday'),
+  t('calendar.Thursday'),
+  t('calendar.Friday'),
+  t('calendar.Saturday')
+])
 </script>
 
 <style scoped lang="scss">

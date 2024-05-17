@@ -28,27 +28,30 @@
                 <div class="natural-day">
                   <el-form :model="naturalDayForm">
                     <el-form-item>
-                      <div>自然日间隔计算：</div>
+                      <div>{{ $t('calendar.naturalDayIntervalCalculation') }}</div>
                     </el-form-item>
-                    <el-form-item label="开始时间" label-width="100px">
+                    <el-form-item :label="$t('calendar.startTime')" label-width="100px">
                       <el-date-picker
                         v-model="naturalDayForm.start"
                         :clearable="false"
                         type="date"
                       />
                     </el-form-item>
-                    <el-form-item label="结束时间" label-width="100px">
+                    <el-form-item :label="$t('calendar.endTime')" label-width="100px">
                       <el-date-picker v-model="naturalDayForm.end" :clearable="false" type="date" />
                     </el-form-item>
-                    <el-form-item label="相差天数" label-width="100px">
+                    <el-form-item :label="$t('calendar.differenceDays')" label-width="100px">
                       <div class="number-day display-flex flex-align">
                         <span>{{ naturalDayComputed }}</span
-                        >天
+                        >{{ $t('calendar.day') }}
                       </div>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="primary" style="width: 240px" @click="handleNaturalDayReset"
-                        >重置</el-button
+                      <el-button
+                        type="primary"
+                        style="width: 240px"
+                        @click="handleNaturalDayReset"
+                        >{{ $t('calendar.reset') }}</el-button
                       >
                     </el-form-item>
                   </el-form>
@@ -56,48 +59,48 @@
                 <div class="workday">
                   <el-form :model="workdayForm">
                     <el-form-item>
-                      <div>工作日间隔计算：</div>
+                      <div>{{ $t('calendar.workingDayIntervalCalculation') }}</div>
                     </el-form-item>
-                    <el-form-item label="开始时间" label-width="100px">
+                    <el-form-item :label="$t('calendar.startTime')" label-width="100px">
                       <el-date-picker v-model="workdayForm.start" :clearable="false" type="date" />
                     </el-form-item>
-                    <el-form-item label="结束时间" label-width="100px">
+                    <el-form-item :label="$t('calendar.endTime')" label-width="100px">
                       <el-date-picker v-model="workdayForm.end" :clearable="false" type="date" />
                     </el-form-item>
-                    <el-form-item label="相差" label-width="100px">
+                    <el-form-item :label="$t('calendar.differ')" label-width="100px">
                       <div class="number-day display-flex flex-align">
                         <span>{{ workdayComputed }}</span
-                        >个工作日
+                        >{{ $t('calendar.workingDays') }}
                       </div>
                     </el-form-item>
                     <el-form-item>
-                      <el-button type="primary" style="width: 240px" @click="handleworkdayReset"
-                        >重置</el-button
-                      >
+                      <el-button type="primary" style="width: 240px" @click="handleworkdayReset">{{
+                        $t('calendar.reset')
+                      }}</el-button>
                     </el-form-item>
                   </el-form>
                 </div>
                 <div class="date-addition-subtraction">
                   <el-form :model="additionSubtractionForm">
                     <el-form-item>
-                      <div>日期加减计算：</div>
+                      <div>{{ $t('calendar.dateAdditionSubtractionCalculation') }}</div>
                     </el-form-item>
-                    <el-form-item label="开始时间" label-width="100px">
+                    <el-form-item :label="$t('calendar.startTime')" label-width="100px">
                       <el-date-picker
                         v-model="additionSubtractionForm.start"
                         :clearable="false"
                         type="date"
                       />
                     </el-form-item>
-                    <el-form-item label="间隔天数" label-width="100px">
+                    <el-form-item :label="$t('calendar.intervalDays')" label-width="100px">
                       <el-input-number
                         v-model="additionSubtractionForm.interval"
-                        placeholder="天数"
+                        :placeholder="$t('calendar.days')"
                         step-strictly
                         style="width: 160px"
                       />
                     </el-form-item>
-                    <el-form-item label="结果" label-width="100px">
+                    <el-form-item :label="$t('calendar.result')" label-width="100px">
                       <div class="result-day display-flex flex-align">
                         {{ additionSubtractionComputed }}
                       </div>
@@ -107,7 +110,7 @@
                         type="primary"
                         style="width: 240px"
                         @click="handleAdditionSubtractionReset"
-                        >重置</el-button
+                        >{{ $t('calendar.reset') }}</el-button
                       >
                     </el-form-item>
                   </el-form>
@@ -126,7 +129,7 @@
                   value-format="YYYY"
                   @change="handleChangeFestivalYear"
                 />
-                <span>选择日期后自动更新当前节日</span>
+                <span>{{ $t('calendar.selectedDateUpdatedHoliday') }}</span>
               </div>
               <ul class="time-line">
                 <li class="time-line-item" v-for="item in festivalsList" :key="item.ym">
@@ -137,7 +140,7 @@
                       <div class="title-month">{{ item.month }}</div>
                       <div>
                         <div class="title-en">{{ monthList[item.month] }}</div>
-                        <div class="title-unit">月</div>
+                        <div class="title-unit">{{ $t('calendar.month') }}</div>
                       </div>
                     </div>
                     <div class="warpper-content display-flex flex-wrap">
@@ -145,9 +148,11 @@
                         <span>{{ f.name }}</span>
                         <span>[{{ f.lunarTime }} {{ f.solarTime }}]</span>
                         <span
-                          >{{ f.isFormerly ? '已过' : '还有'
+                          >{{ f.isFormerly ? $t('calendar.beenDays1') : t('calendar.daysToGo1')
                           }}<span class="overstriking">{{ f.time }}</span
-                          >天</span
+                          >{{
+                            f.isFormerly ? t('calendar.beenDays2') : t('calendar.daysToGo2')
+                          }}</span
                         >
                       </div>
                     </div>
@@ -166,6 +171,8 @@
 import { ref, computed, type Ref } from 'vue'
 import dayjs from 'dayjs'
 import { Solar, Lunar, HolidayUtil, SolarYear } from 'lunar-typescript'
+import { padZeroIfNeeded } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   weekMap: {
@@ -174,11 +181,13 @@ const props = defineProps({
   }
 })
 
-const toolsSegmentedActive = ref(1)
+const { t } = useI18n()
+
+const toolsSegmentedActive = ref(0)
 const toolsSegmentedHeight = ref(34)
 const toolsSegmentedList = ref([
-  { value: 0, label: '日期差计算' },
-  { value: 1, label: '节日大全' }
+  { value: 0, label: t('calendar.dateDifferenceCalculation') },
+  { value: 1, label: t('calendar.festivalBook') }
 ])
 const handleToolsSegmented = (val: number) => {
   toolsSegmentedActive.value = val
@@ -238,9 +247,11 @@ const additionSubtractionForm = ref({
 const additionSubtractionComputed = computed(() => {
   const start = Solar.fromDate(dayjs(additionSubtractionForm.value.start).toDate())
   const result = start.next(additionSubtractionForm.value.interval)
-  const ymd = dayjs(result.toString()).format('YYYY年MM月DD日')
+  const year = dayjs(result.toString()).year()
+  const month = padZeroIfNeeded(dayjs(result.toString()).month() + 1)
+  const day = padZeroIfNeeded(dayjs(result.toString()).date())
   const week = props.weekMap[result.getWeek()]
-  return `${ymd} ${week}`
+  return `${t('calendar.ymd', [year, month, day])} ${week}`
 })
 const handleAdditionSubtractionReset = () => {
   additionSubtractionForm.value.start = ymd

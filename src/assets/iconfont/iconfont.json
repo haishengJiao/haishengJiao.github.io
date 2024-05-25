@@ -6,6 +6,55 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11833563",
+      "name": "下载",
+      "font_class": "xiazai1",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "9925121",
+      "name": "batch",
+      "font_class": "batch",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "637760",
+      "name": "对号",
+      "font_class": "duihao",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "3101162",
+      "name": "三角形",
+      "font_class": "sanjiaoxing",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "5110575",
+      "name": "前进-空",
+      "font_class": "qianjin-kong",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "5111170",
+      "name": "后退-空",
+      "font_class": "houtui-kong",
+      "unicode": "e657",
+      "unicode_decimal": 58967
+    },
+    {
+      "icon_id": "26233766",
+      "name": "左右翻转",
+      "font_class": "zuoyoufanzhuan",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
       "icon_id": "937",
       "name": "射手座",
       "font_class": "sheshouzuo",

@@ -3,6 +3,7 @@
     <memo></memo>
     <chat-ai></chat-ai>
     <calendar></calendar>
+    <avatar-generation></avatar-generation>
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import Memo from './Memo/index.vue'
 import ChatAi from './ChatGPT/index.vue'
 import Calendar from './Calendar/index.vue'
+import AvatarGeneration from './AvatarGeneration/index.vue'
 </script>
 
 <style scoped lang="scss">

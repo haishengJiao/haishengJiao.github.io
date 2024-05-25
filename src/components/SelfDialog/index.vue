@@ -7,7 +7,7 @@
     :show-close="false"
     class="self-dialog"
     :style="{ height: isFullScreen ? '100%' : '64%', 'min-height': '450px' }"
-    :before-close="handleClose"
+    :before-close="handleBeforeClose"
   >
     <div class="operation display-flex flex-align">
       <div
@@ -36,10 +36,14 @@ const props = defineProps({
   show: {
     type: Boolean,
     default: false
+  },
+  isBeforeClose: {
+    type: Boolean,
+    default: false
   }
 })
 
-const emit = defineEmits(['update:show'])
+const emit = defineEmits(['update:show', 'beforeClose'])
 
 watch(
   () => props.show,
@@ -57,6 +61,13 @@ const handleFullScreen = () => {
 
 const handleClose = () => {
   emit('update:show', false)
+}
+const handleBeforeClose = () => {
+  if (props.isBeforeClose) {
+    emit('beforeClose')
+  } else {
+    emit('update:show', false)
+  }
 }
 </script>
 

@@ -427,7 +427,7 @@ const handleFormatdayText = (item: DaysList) => {
   } else if (item.solarTerms) {
     return item.solarTerms
   } else if (item.dayInChineseNumber === 1) {
-    return item.monthInChinese
+    return item.monthInChinese + '月'
   } else {
     return item.dayInChinese
   }

@@ -7,6 +7,9 @@ html.dark {
 
 :root {
   .el-button {
+    --el-button-disabled-border-color: var(--theme-color);
+    --el-button-disabled-bg-color: var(--theme-color);
+
     padding: 0 25px;
     height: 32px;
   }
@@ -19,6 +22,10 @@ html.dark {
   .el-button--large {
     padding: 0 35px;
     height: 36px;
+  }
+
+  .el-button.is-disabled {
+    opacity: 0.5;
   }
 
   .el-color-dropdown__btns .el-button {

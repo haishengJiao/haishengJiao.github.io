@@ -134,11 +134,11 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from 'vue'
-import html2canvas from 'html2canvas'
+// import html2canvas from 'html2canvas'
 import ViewAvatar from './components/ViewAvatar.vue'
 import SettingSection from './components/SettingSection.vue'
 import { useAvatarData, type List, type Key } from './hook'
-import { generateUniqueId } from '@/utils'
+// import { generateUniqueId } from '@/utils'
 
 const { avatarData, downloadSizeOptions, generateRandomAvatar, avatarDataHistory, historyIndex } =
   useAvatarData()
@@ -208,15 +208,15 @@ const handleDownloadAvatar = async (id: string) => {
 }
 const generateDownloadData = async (el: HTMLElement) => {
   try {
-    const res = await html2canvas(el, {
-      backgroundColor: 'transparent'
-    })
-    const base64 = res.toDataURL('image/png')
-    const a = document.createElement('a')
-    a.href = base64
-    a.download = generateUniqueId()
-    a.click()
-    a.remove()
+    // const res = await html2canvas(el, {
+    //   backgroundColor: 'transparent'
+    // })
+    // const base64 = res.toDataURL('image/png')
+    // const a = document.createElement('a')
+    // a.href = base64
+    // a.download = generateUniqueId()
+    // a.click()
+    // a.remove()
     document.body.removeChild(el)
   } catch (error) {
     console.log(error)

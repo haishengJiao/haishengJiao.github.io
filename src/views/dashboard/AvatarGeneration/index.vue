@@ -173,7 +173,6 @@ const handleFlipHorizontal = () => {
 const updateAvatarHistory = () => {
   avatarDataHistory.value.push({ ...avatarData.value })
   historyIndex.value = avatarDataHistory.value.length
-  console.log(avatarDataHistory.value)
 }
 const updateAvatar = () => {
   avatarData.value = generateRandomAvatar()

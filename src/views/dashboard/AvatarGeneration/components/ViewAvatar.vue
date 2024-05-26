@@ -90,7 +90,7 @@
       @click="downloadSingle"
       :class="{ disabled: isDownloading }"
     >
-      下载头像
+      {{ $t('avatar.downloadAvatar') }}
     </div>
   </div>
 </template>
@@ -137,8 +137,8 @@ const downloadSingle = () => {
     padding: 0 12px;
     height: 32px;
     text-align: center;
-    color: #a4b2c1;
-    background-color: #2a2f37;
+    color: var(--avatar-color-02);
+    background-color: var(--avatar-bg-04);
     border-radius: 6px;
     line-height: 32px;
     cursor: pointer;
@@ -150,7 +150,7 @@ const downloadSingle = () => {
     }
 
     &:hover {
-      color: #c2ccd6;
+      background-color: var(--avatar-bg-05);
     }
   }
 

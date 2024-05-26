@@ -2,6 +2,7 @@
   <div
     class="avatar-container dashboard-item-container display-flex display-column"
     @click="showAvatarDialog = true"
+    :title="$t('avatar.avatarGeneration')"
   >
     <img src="@/assets/images/avatar/avatar-cover.webp" alt="avatar" />
   </div>
@@ -18,7 +19,7 @@
           <div
             class="menu-item display-flex flex-align flex-justify"
             :class="{ disabled: avatarDataHistory.length <= 1 || historyIndex <= 1 }"
-            title="撤销"
+            :title="$t('avatar.revocation')"
             @click="handleRevocation"
           >
             <i class="iconfont icon-houtui-kong"></i>
@@ -26,33 +27,35 @@
           <div
             class="menu-item display-flex flex-align flex-justify"
             :class="{ disabled: avatarDataHistory.length === historyIndex }"
-            title="还原"
+            :title="$t('avatar.restore')"
             @click="handleRestore"
           >
             <i class="iconfont icon-qianjin-kong"></i>
           </div>
           <div
             class="menu-item display-flex flex-align flex-justify"
-            title="水平翻转"
+            :title="$t('avatar.flipHorizontal')"
             @click="handleFlipHorizontal"
           >
             <i class="iconfont icon-zuoyoufanzhuan"></i>
           </div>
           <div
             class="menu-item display-flex flex-align flex-justify"
-            title="批量生成"
+            :title="$t('avatar.batchGeneration')"
             @click="handleOpenBatch"
           >
             <i class="iconfont icon-batch"></i>
           </div>
         </div>
         <div class="action-group display-flex flex-align">
-          <div class="button-item display-flex flex-align" @click="updateAvatar">随机生成</div>
+          <div class="button-item display-flex flex-align" @click="updateAvatar">
+            {{ $t('avatar.randomGeneration') }}
+          </div>
           <div class="button-item display-flex flex-align" :class="{ disabled: isDownloading }">
-            <div>
+            <div :title="$t('avatar.downloadSize')">
               <el-select
                 v-model="downloadSize"
-                placeholder="下载尺寸"
+                :placeholder="$t('avatar.downloadSize')"
                 style="width: 70px"
                 :disabled="isDownloading"
               >
@@ -64,7 +67,7 @@
                 />
               </el-select>
             </div>
-            <div @click="handleDownloadAvatar('view-avatar-single')">
+            <div @click="handleDownloadAvatar('view-avatar-single')" :title="$t('avatar.download')">
               <i class="iconfont icon-xiazai1"></i>
             </div>
           </div>
@@ -96,13 +99,16 @@
         <div class="batch-modal" v-show="isShowBatchModal" @click="handleCloseBatchModal">
           <div class="batch-modal-cantainer display-flex display-column" @click.stop="">
             <div class="content-title display-flex flex-align flex-justify-between">
-              <div class="title-left">已为你自动生成头像</div>
+              <div class="title-left">{{ $t('avatar.automaticAvatarGeneration') }}</div>
               <div class="title-right">
-                <el-button type="primary" @click="handleReplaceBatchList" :disabled="isDownloadAll"
-                  >换一换</el-button
+                <el-button
+                  type="primary"
+                  @click="handleReplaceBatchList"
+                  :disabled="isDownloadAll"
+                  >{{ $t('avatar.change') }}</el-button
                 >
                 <el-button type="primary" @click="handleDownloadAll" :disabled="isDownloadAll"
-                  >{{ isDownloadAll ? '正在下载' : '下载全部' }}
+                  >{{ isDownloadAll ? $t('avatar.downloading') : $t('avatar.downloadAll') }}
                   <span v-if="isDownloadAll" style="margin-left: 5px"
                     >({{ downloadIndex }}/{{ batchList.length }})</span
                   >
@@ -261,7 +267,7 @@ const isShowBatchModal = ref(false)
 const batchList: Ref<(typeof avatarData.value)[]> = ref([])
 const handleCreatedBatchList = () => {
   batchList.value = []
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 16; i++) {
     batchList.value.push(generateRandomAvatar())
   }
 }
@@ -290,52 +296,8 @@ const handleReplaceBatchList = () => {
 
 .avatar-dialog {
   position: relative;
-  background-color: #171d21;
+  background-color: var(--avatar-bg-01);
   user-select: none;
-
-  .view-avatar {
-    position: relative;
-    overflow: hidden;
-    width: 280px;
-    height: 280px;
-
-    .download-avatar {
-      position: absolute;
-      bottom: 15%;
-      left: 50%;
-      padding: 0 12px;
-      height: 32px;
-      text-align: center;
-      color: #a4b2c1;
-      background-color: #2a2f37;
-      border-radius: 6px;
-      line-height: 32px;
-      cursor: pointer;
-      transform: translateX(-50%);
-      opacity: 0;
-      transition: opacity 0.3s;
-
-      &:hover {
-        color: #c2ccd6;
-      }
-    }
-
-    &:hover .download-avatar {
-      opacity: 1;
-    }
-
-    &.circle {
-      border-radius: 50%;
-    }
-
-    &.square {
-      border-radius: 0;
-    }
-
-    &.squircle {
-      border-radius: 25px;
-    }
-  }
 
   .avatar-warpper {
     position: relative;
@@ -343,16 +305,20 @@ const handleReplaceBatchList = () => {
     .action-menu {
       padding: 5px;
       margin-top: 50px;
-      background-color: #2a2f37;
+      background-color: var(--avatar-bg-07);
       border-radius: 25px;
 
       .menu-item {
         margin: 0 8px;
         width: 40px;
         height: 40px;
-        background-color: #404854;
+        background-color: var(--avatar-bg-06);
         border-radius: 50%;
         cursor: pointer;
+
+        &:not(.disabled):hover {
+          background-color: var(--avatar-bg-08);
+        }
 
         i {
           font-size: 22px;
@@ -378,24 +344,25 @@ const handleReplaceBatchList = () => {
         padding: 0 20px;
         height: 40px;
         font-size: 14px;
-        color: #a4b2c1;
-        background-color: #2a2f37;
-        font-weight: 700;
+        color: var(--avatar-color-02);
+        background-color: var(--avatar-bg-09);
         border-radius: 10px;
+        font-weight: 700;
 
         .el-select {
-          --el-color-primary: #2a2f37;
-          --el-border-color-hover: #2a2f37;
-          --el-fill-color-blank: #2a2f37;
-          --el-border-color: #2a2f37;
-          --el-select-input-focus-border-color: #2a2f37;
-          --el-text-color-regular: #a4b2c1;
-          --el-text-color-placeholder: #a4b2c1;
-          --el-fill-color-light: #2a2f37;
-          --el-select-disabled-border: #2a2f37;
+          --el-color-primary: var(--avatar-bg-09);
+          --el-border-color-hover: var(--avatar-bg-09);
+          --el-fill-color-blank: var(--avatar-bg-09);
+          --el-border-color: var(--avatar-bg-09);
+          --el-select-input-focus-border-color: var(--avatar-bg-09);
+          --el-text-color-regular: var(--avatar-color-02);
+          --el-text-color-placeholder: var(--avatar-color-02);
+          --el-fill-color-light: var(--avatar-bg-09);
+          --el-select-disabled-border: var(--avatar-bg-09);
 
           :deep(.el-select__wrapper) {
             padding-left: 0;
+            transition: none;
           }
 
           :deep(.el-select__suffix) {
@@ -406,26 +373,30 @@ const handleReplaceBatchList = () => {
         &.disabled {
           opacity: 0.5;
           cursor: not-allowed;
+
+          .iconfont {
+            cursor: not-allowed;
+          }
         }
 
         &:first-child {
           cursor: pointer;
         }
 
-        &:hover {
-          color: #c2ccd6;
+        &:not(.disabled):hover {
+          .el-select {
+            --el-fill-color-blank: var(--avatar-bg-08);
+            --el-border-color: var(--avatar-bg-08);
+            --el-color-primary: var(--avatar-bg-08);
+            --el-border-color-hover: var(--avatar-bg-08);
+            --el-select-input-focus-border-color: var(--avatar-bg-08);
+            --el-fill-color-light: var(--avatar-bg-08);
+            --el-select-disabled-border: var(--avatar-bg-08);
+          }
+
+          background-color: var(--avatar-bg-08);
         }
       }
-    }
-
-    .gradient-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      width: 100%;
-      height: 100%;
-      background-color: red;
     }
   }
 
@@ -434,10 +405,11 @@ const handleReplaceBatchList = () => {
     padding: 14px 0;
     width: 32%;
     height: 100%;
+    background-color: var(--avatar-bg-11);
     transition: width 0.2s;
 
     .configurator-container {
-      color: #a4b2c1;
+      color: var(--avatar-color-03);
     }
 
     .trigger {
@@ -446,7 +418,7 @@ const handleReplaceBatchList = () => {
       width: 20px;
       height: 64px;
       color: #fff;
-      background-color: #1f2329;
+      background-color: var(--avatar-bg-13);
       border-radius: 6px 0 0 6px;
       transition: width 0.2s, background-color 0.2s;
       transform: translate(-100%, -50%);
@@ -458,7 +430,7 @@ const handleReplaceBatchList = () => {
 
       &:hover {
         width: 24px;
-        background-color: #2a2f37;
+        background-color: var(--avatar-bg-14);
       }
     }
   }
@@ -490,7 +462,7 @@ const handleReplaceBatchList = () => {
       overflow: hidden;
       width: 90%;
       height: 90%;
-      background-color: #252a31;
+      background-color: var(--avatar-bg-02);
       border-radius: 16px;
       transform: translate(-50%, -50%);
 
@@ -498,8 +470,8 @@ const handleReplaceBatchList = () => {
         padding: 0 32px;
         height: 56px;
         font-size: 16px;
-        color: #a4b2c1;
-        background-color: #2c323a;
+        color: var(--avatar-color-01);
+        background-color: var(--avatar-bg-03);
       }
 
       .content-warpper {

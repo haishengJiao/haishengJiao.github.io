@@ -1,6 +1,6 @@
 <template>
   <div class="setting-section">
-    <div class="section-title">头像形状</div>
+    <div class="section-title">{{ $t('avatar.avatarShape') }}</div>
     <ul class="shape-wrapper display-flex flex-align">
       <li
         class="shape"
@@ -13,7 +13,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">背景颜色</div>
+    <div class="section-title">{{ $t('avatar.backgroundColor') }}</div>
     <ul class="color-wrapper color-wrapper-bg display-flex flex-wrap">
       <li
         class="color-item display-flex flex-align flex-justify"
@@ -34,7 +34,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">脸蛋</div>
+    <div class="section-title">{{ $t('avatar.cheek') }}</div>
     <ul class="widget-list display-flex flex-wrap">
       <li
         class="list-item display-flex flex-align flex-justify"
@@ -56,10 +56,10 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">头发/头饰</div>
+    <div class="section-title">{{ $t('avatar.hairheadwear') }}</div>
     <div class="colour-container display-flex flex-align" @click="handleOpenHairColor">
       <i class="iconfont icon-sanjiaoxing" :class="{ open: isOpenHairColor }"></i>
-      <span>颜色</span>
+      <span>{{ $t('avatar.colour') }}</span>
     </div>
     <transition name="colour-fade">
       <div v-show="isOpenHairColor" class="colour-fade">
@@ -103,7 +103,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">耳朵</div>
+    <div class="section-title">{{ $t('avatar.ear') }}</div>
     <ul class="widget-list display-flex flex-wrap">
       <li
         class="list-item display-flex flex-align flex-justify"
@@ -125,7 +125,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">耳环</div>
+    <div class="section-title">{{ $t('avatar.earrings') }}</div>
     <ul class="widget-list display-flex flex-wrap">
       <li
         class="list-item display-flex flex-align flex-justify"
@@ -151,7 +151,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">眉毛</div>
+    <div class="section-title">{{ $t('avatar.eyebrow') }}</div>
     <ul class="widget-list display-flex flex-wrap">
       <li
         class="list-item display-flex flex-align flex-justify"
@@ -173,7 +173,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">眼睛</div>
+    <div class="section-title">{{ $t('avatar.eye') }}</div>
     <ul class="widget-list display-flex flex-wrap">
       <li
         class="list-item display-flex flex-align flex-justify"
@@ -195,7 +195,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">鼻子</div>
+    <div class="section-title">{{ $t('avatar.nose') }}</div>
     <ul class="widget-list display-flex flex-wrap">
       <li
         class="list-item display-flex flex-align flex-justify"
@@ -217,7 +217,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">眼镜</div>
+    <div class="section-title">{{ $t('avatar.glasses') }}</div>
     <ul class="widget-list display-flex flex-wrap">
       <li
         class="list-item display-flex flex-align flex-justify"
@@ -243,7 +243,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">嘴巴</div>
+    <div class="section-title">{{ $t('avatar.mouth') }}</div>
     <ul class="widget-list display-flex flex-wrap">
       <li
         class="list-item display-flex flex-align flex-justify"
@@ -265,7 +265,7 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">胡子</div>
+    <div class="section-title">{{ $t('avatar.mustache') }}</div>
     <ul class="widget-list display-flex flex-wrap">
       <li
         class="list-item display-flex flex-align flex-justify"
@@ -291,10 +291,10 @@
     </ul>
   </div>
   <div class="setting-section">
-    <div class="section-title">衣着</div>
+    <div class="section-title">{{ $t('avatar.clothes') }}</div>
     <div class="colour-container display-flex flex-align" @click="handleOpenClothesColor">
       <i class="iconfont icon-sanjiaoxing" :class="{ open: isOpenClothesColor }"></i>
-      <span>颜色</span>
+      <span>{{ $t('avatar.colour') }}</span>
     </div>
     <transition name="colour-fade">
       <div v-show="isOpenClothesColor" class="colour-fade">
@@ -423,17 +423,21 @@ const handleOpenClothesColor = () => {
       transition: background-color 0.2s;
       cursor: pointer;
 
+      .iconfont {
+        color: var(--avatar-color-05) !important;
+      }
+
       svg {
         width: 100% !important;
         height: 100% !important;
       }
 
       :deep(path) {
-        stroke: #a4b2c1 !important;
+        stroke: var(--avatar-color-05) !important;
       }
 
       &.selected {
-        background-color: #2c323a;
+        background-color: var(--avatar-bg-10);
       }
     }
   }
@@ -493,7 +497,7 @@ const handleOpenClothesColor = () => {
           left: 50%;
           width: 86%;
           height: 86%;
-          background-color: #15171b;
+          background-color: var(--avatar-bg-12);
           border-radius: inherit;
           content: '';
           transform: translate(-50%, -50%);
@@ -547,7 +551,7 @@ const handleOpenClothesColor = () => {
   .colour-container {
     margin-bottom: 10px;
     font-size: 12px;
-    color: #677f98;
+    color: var(--avatar-color-04);
     cursor: pointer;
 
     .iconfont {

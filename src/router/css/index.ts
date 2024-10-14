@@ -1,14 +1,13 @@
-import i18n from '@/lang'
-const { t } = i18n.global
+import type { RouteRecordRaw } from 'vue-router'
 
-export default [
+const css: RouteRecordRaw[] = [
   {
     path: 'css',
     name: 'css',
     component: () => import('@/views/css/index.vue'),
     meta: {
-      title: t('router.css'),
-      pageTitle: t('router.css'),
+      title: 'router.css',
+      pageTitle: 'router.css',
       index: 1,
       group: 'css',
       isShowSub: true
@@ -19,7 +18,8 @@ export default [
     name: 'css2',
     component: () => import('@/views/css/css2.vue'),
     meta: {
-      title: 'css2',
+      title: 'router.css2',
+      pageTitle: 'router.css2',
       index: 2,
       group: 'css',
       isShowSub: true
@@ -30,10 +30,13 @@ export default [
     name: 'css3',
     component: () => import('@/views/css/css3.vue'),
     meta: {
-      title: 'css3',
+      title: 'router.css3',
+      pageTitle: 'router.css3',
       index: 2,
       group: 'css',
       isShowSub: true
     }
   }
 ]
+
+export default css

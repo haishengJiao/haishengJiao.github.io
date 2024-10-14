@@ -5,7 +5,7 @@
       <li
         class="shape"
         :class="[item.value, item.value === avatarData.shape ? 'active' : '']"
-        :title="item.lable"
+        :title="getI18nText(item.lable)"
         v-for="item in shapeList"
         :key="item.value"
         @click="handleShape(item.value)"
@@ -341,6 +341,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { getI18nText } from '@/utils'
 import { useAvatarData, type List, type Key } from '../hook'
 defineProps({
   avatarData: {

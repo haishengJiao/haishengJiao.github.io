@@ -1,15 +1,16 @@
-import i18n from '@/lang'
-const { t } = i18n.global
+import type { RouteRecordRaw } from 'vue-router'
 
-export default {
+const dashboard: RouteRecordRaw = {
   path: 'dashboard',
   name: 'dashboard',
   component: () => import('@/views/dashboard/index.vue'),
   meta: {
-    title: t('router.dashboard'),
-    pageTitle: t('router.dashboard'),
+    title: 'router.dashboard',
+    pageTitle: 'router.dashboard',
     index: 1,
     group: 'dashboard',
     isShowSub: false
   }
 }
+
+export default dashboard

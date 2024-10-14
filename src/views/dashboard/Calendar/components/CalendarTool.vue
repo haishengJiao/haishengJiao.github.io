@@ -16,7 +16,7 @@
             :class="{ active: item.value === toolsSegmentedActive }"
             @click="handleToolsSegmented(item.value)"
           >
-            {{ item.label }}
+            {{ getI18nText(item.label) }}
           </li>
         </ul>
       </div>
@@ -171,7 +171,7 @@
 import { ref, computed, type Ref } from 'vue'
 import dayjs from 'dayjs'
 import { Solar, Lunar, HolidayUtil, SolarYear } from 'lunar-typescript'
-import { padZeroIfNeeded } from '@/utils'
+import { getI18nText, padZeroIfNeeded } from '@/utils'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
@@ -186,8 +186,8 @@ const { t } = useI18n()
 const toolsSegmentedActive = ref(0)
 const toolsSegmentedHeight = ref(34)
 const toolsSegmentedList = ref([
-  { value: 0, label: t('calendar.dateDifferenceCalculation') },
-  { value: 1, label: t('calendar.festivalBook') }
+  { value: 0, label: 'calendar.dateDifferenceCalculation' },
+  { value: 1, label: 'calendar.festivalBook' }
 ])
 const handleToolsSegmented = (val: number) => {
   toolsSegmentedActive.value = val
@@ -250,7 +250,7 @@ const additionSubtractionComputed = computed(() => {
   const year = dayjs(result.toString()).year()
   const month = padZeroIfNeeded(dayjs(result.toString()).month() + 1)
   const day = padZeroIfNeeded(dayjs(result.toString()).date())
-  const week = props.weekMap[result.getWeek()]
+  const week = getI18nText(props.weekMap[result.getWeek()])
   return `${t('calendar.ymd', [year, month, day])} ${week}`
 })
 const handleAdditionSubtractionReset = () => {

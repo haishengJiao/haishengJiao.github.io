@@ -8,7 +8,9 @@
     <div class="calendar-content flex-1">
       <div class="today">{{ day }}</div>
       <div class="day">{{ $t('calendar.howManyDaysWeek', [daysTotal, weekTotal]) }}</div>
-      <div class="week">{{ monthInChinese }}月{{ dayInChinese }} {{ weekMap[week] }}</div>
+      <div class="week">
+        {{ monthInChinese }}月{{ dayInChinese }} {{ getI18nText(weekMap[week]) }}
+      </div>
     </div>
   </div>
   <self-dialog v-model:show="calendarDialogVisible">
@@ -33,18 +35,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import CalendarBoard from './components/CalendarBoard.vue'
 import CalendarTool from './components/CalendarTool.vue'
 import dayjs from 'dayjs'
 import { Solar, SolarUtil, SolarWeek, Lunar } from 'lunar-typescript'
 import { useI18n } from 'vue-i18n'
+import { useLangStore } from '@/stores'
+import { getI18nText } from '@/utils'
 
 const { t } = useI18n()
+const langStore = useLangStore()
 const calendarDialogVisible = ref(false)
 
 const segmentedValue = ref(t('calendar.calendar'))
-const segmentedOptions = [t('calendar.calendar'), t('calendar.tool')]
+const segmentedOptions = ref([t('calendar.calendar'), t('calendar.tool')])
+
+watch(
+  () => langStore.lang,
+  () => {
+    segmentedValue.value = getI18nText('calendar.calendar')
+    segmentedOptions.value = [getI18nText('calendar.calendar'), getI18nText('calendar.tool')]
+  }
+)
 
 const year = ref(dayjs().year())
 const month = ref(dayjs().month() + 1)
@@ -60,13 +73,13 @@ const monthInChinese = lunarCalendar.getMonthInChinese()
 const dayInChinese = lunarCalendar.getDayInChinese()
 
 const weekMap = ref([
-  t('calendar.Sunday'),
-  t('calendar.Monday'),
-  t('calendar.Tuesday'),
-  t('calendar.Wednesday'),
-  t('calendar.Thursday'),
-  t('calendar.Friday'),
-  t('calendar.Saturday')
+  'calendar.Sunday',
+  'calendar.Monday',
+  'calendar.Tuesday',
+  'calendar.Wednesday',
+  'calendar.Thursday',
+  'calendar.Friday',
+  'calendar.Saturday'
 ])
 </script>
 

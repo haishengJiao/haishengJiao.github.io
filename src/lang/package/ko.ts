@@ -21,8 +21,11 @@ export default {
   },
   router: {
     css: 'Css',
+    css2: 'Css2',
+    css3: 'Css3',
     dashboard: '홈페이지',
     vue: 'Vue',
+    vue3: 'Vue3',
     subjectColor: '주제색',
     home: '홈페이지'
   },

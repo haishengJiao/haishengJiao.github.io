@@ -22,8 +22,11 @@ export default {
   },
   router: {
     css: 'css',
+    css2: 'css2',
+    css3: 'css3',
     dashboard: '首页',
     vue: 'vue',
+    vue3: 'vue3',
     subjectColor: '主题色',
     home: '主页'
   },

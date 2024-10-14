@@ -2,15 +2,13 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { useThemeStore, useLangStore } from '@/stores'
-import i18n, { getStorageLanguage } from '@/lang'
+import { getStorageLanguage } from '@/lang'
 import { setPageTitle } from '@/utils'
 import { encrypt, decrypt } from '@/utils/crypto'
 import Home from '@/views/home/index.vue'
 import dashboard from './dashboard'
 import vue from './vue'
 import css from './css'
-
-const { t } = i18n.global
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -20,7 +18,7 @@ const router = createRouter({
       name: 'home',
       component: Home,
       meta: {
-        pageTitle: t('router.home')
+        pageTitle: 'router.home'
       }
     },
     {

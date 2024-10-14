@@ -48,7 +48,7 @@
               class="flex-1 display-flex flex-justify"
               :class="{ 'week-end': item === $t('calendar.Sat') || item === $t('calendar.Sun') }"
             >
-              {{ item }}
+              {{ getI18nText(item) }}
             </li>
           </ul>
           <ul class="list display-flex flex-wrap flex-1">
@@ -97,7 +97,9 @@
       </div>
       <div class="today-info display-flex display-column">
         <div class="today-card display-flex display-column flex-align">
-          <div class="today-card-header">{{ dayInfo.ymd }} {{ weekMap[dayInfo.week] }}</div>
+          <div class="today-card-header">
+            {{ dayInfo.ymd }} {{ getI18nText(weekMap[dayInfo.week]) }}
+          </div>
           <div class="today-card-content">{{ dayInfo.day }}</div>
           <div class="today-card-chinese">{{ dayInfo.fullChinese }}</div>
           <div class="chinese-zodiac">
@@ -225,13 +227,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, type Ref } from 'vue'
+import { computed, ref, type Ref, watch } from 'vue'
 import dayjs from 'dayjs'
 import { Solar, SolarMonth, Lunar, HolidayUtil, SolarUtil, SolarWeek } from 'lunar-typescript'
-import { padZeroIfNeeded } from '@/utils'
+import { getI18nText, padZeroIfNeeded } from '@/utils'
 import { encrypt, decrypt } from '@/utils/crypto'
 import { useThrottleFn } from '@vueuse/core'
 import { useI18n } from 'vue-i18n'
+import { useLangStore } from '@/stores'
 
 defineProps({
   weekMap: {
@@ -241,6 +244,7 @@ defineProps({
 })
 
 const { t } = useI18n()
+const langStore = useLangStore()
 
 const dayjsYear = `${dayjs().year()}`
 const dayjsMonth = `${dayjs().year()}-${padZeroIfNeeded(dayjs().month() + 1)}`
@@ -261,23 +265,23 @@ const weekList: Ref<string[]> = ref([])
 const setWeekList = () => {
   if (weekSwitch.value) {
     weekList.value = [
-      t('calendar.Mon'),
-      t('calendar.Tues'),
-      t('calendar.Wed'),
-      t('calendar.Thurs'),
-      t('calendar.Fri'),
-      t('calendar.Sat'),
-      t('calendar.Sun')
+      'calendar.Mon',
+      'calendar.Tues',
+      'calendar.Wed',
+      'calendar.Thurs',
+      'calendar.Fri',
+      'calendar.Sat',
+      'calendar.Sun'
     ]
   } else {
     weekList.value = [
-      t('calendar.Sun'),
-      t('calendar.Mon'),
-      t('calendar.Tues'),
-      t('calendar.Wed'),
-      t('calendar.Thurs'),
-      t('calendar.Fri'),
-      t('calendar.Sat')
+      'calendar.Sun',
+      'calendar.Mon',
+      'calendar.Tues',
+      'calendar.Wed',
+      'calendar.Thurs',
+      'calendar.Fri',
+      'calendar.Sat'
     ]
   }
 }
@@ -418,6 +422,13 @@ const getViewDayList = () => {
   getSelectedDayInfo()
 }
 getViewDayList()
+
+watch(
+  () => langStore.lang,
+  () => {
+    getViewDayList()
+  }
+)
 
 const handleFormatdayText = (item: DaysList) => {
   if (item.festivals.length > 0) {

@@ -9,7 +9,7 @@
           :key="item.path"
           @click="handleNav(item.path)"
         >
-          {{ item.meta?.title }}
+          {{ getI18nText(item.meta.title) }}
         </li>
       </ul>
     </div>
@@ -42,7 +42,7 @@
                 :key="item.value"
                 :command="item.value"
               >
-                {{ item.name }}
+                {{ getI18nText(item.name) }}
               </el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -53,12 +53,15 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, type PropType } from 'vue'
-import type { RouteRecordNormalized } from 'vue-router'
+import { computed, ref, toRefs, type PropType } from 'vue'
+import { useRoute, type RouteRecordNormalized } from 'vue-router'
 import { useThemeStore } from '@/stores'
 import { useScreenfull } from '@/hooks/screenfull'
 import { useLangStore } from '@/stores'
 import { type Lnag } from '@/stores/modules/lang'
+import { getI18nText, setPageTitle } from '@/utils'
+
+const route = useRoute()
 
 defineProps({
   hander: { type: Object as PropType<RouteRecordNormalized[]>, default: () => ({}) },
@@ -68,7 +71,7 @@ const emit = defineEmits(['changeHander'])
 
 const themeStore = useThemeStore()
 const { isFullscreen, toggleFullScreen } = useScreenfull()
-const { langList, handleChangeLang, lang } = useLangStore()
+const { langList, handleChangeLang, lang } = toRefs(useLangStore())
 
 const handleNav = (path: string) => {
   emit('changeHander', path)
@@ -80,12 +83,12 @@ const changeTheme = (val: string | boolean | number) => {
 }
 
 const i18nList = computed(() => {
-  return langList.filter((item) => item.value !== lang)
+  return langList.value.filter((item) => item.value !== lang.value)
 })
 
 const changeLang = (val: Lnag) => {
-  handleChangeLang(val)
-  location.reload()
+  handleChangeLang.value(val)
+  setPageTitle(route.meta.pageTitle || '')
 }
 </script>
 

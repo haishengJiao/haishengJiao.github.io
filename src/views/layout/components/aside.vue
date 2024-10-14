@@ -3,7 +3,7 @@
     <el-scrollbar height="100%">
       <el-menu :default-active="defaultActive" router class="aside-menu">
         <el-menu-item :index="item.path" v-for="item in nav" :key="item.path">
-          <span>{{ item.meta.title }}</span>
+          <span>{{ getI18nText(item.meta.title) }}</span>
         </el-menu-item>
       </el-menu>
     </el-scrollbar>
@@ -11,6 +11,7 @@
 </template>
 
 <script setup lang="ts">
+import { getI18nText } from '@/utils'
 import { ref, watch, type PropType } from 'vue'
 import { useRoute, type RouteRecordNormalized } from 'vue-router'
 

@@ -1,11 +1,12 @@
 import { v4 } from 'uuid'
+import i18n from '@/lang'
 
 /**
  * 设置网页标题
  * @param title 标题
  */
 export const setPageTitle = (title: string) => {
-  document.title = title
+  document.title = getI18nText(title)
 }
 
 /**
@@ -23,4 +24,14 @@ export const generateUniqueId = (): string => {
  */
 export const padZeroIfNeeded = (num: number): string => {
   return num < 10 ? '0' + num : String(num)
+}
+
+/**
+ * 获取国际化文本
+ * @param key 国际化key
+ * @returns 国际化文本
+ */
+export const getI18nText = (key: string | undefined) => {
+  if (!key) return ''
+  return i18n.global.t(key)
 }

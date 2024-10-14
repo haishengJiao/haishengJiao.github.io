@@ -40,7 +40,6 @@ import MustacheScruff from '../components/MustacheScruff.vue'
 import ClothesCrew from '../components/ClothesCrew.vue'
 import ClothesCollared from '../components/ClothesCollared.vue'
 import ClothesOpen from '../components/ClothesOpen.vue'
-import { useI18n } from 'vue-i18n'
 
 export interface List {
   component: DefineComponent<
@@ -79,8 +78,6 @@ export type Key =
   | 'clothes'
 
 export const useAvatarData = () => {
-  const { t } = useI18n()
-
   const faceList: List[] = [
     {
       component: markRaw(FaceBase),
@@ -528,9 +525,9 @@ export const useAvatarData = () => {
   const historyIndex = ref(0)
 
   const shapeList = [
-    { value: 'circle', lable: t('avatar.round') },
-    { value: 'square', lable: t('avatar.square') },
-    { value: 'squircle', lable: t('avatar.Squircle') }
+    { value: 'circle', lable: 'avatar.round' },
+    { value: 'square', lable: 'avatar.square' },
+    { value: 'squircle', lable: 'avatar.Squircle' }
   ]
 
   const bgColorList = [
